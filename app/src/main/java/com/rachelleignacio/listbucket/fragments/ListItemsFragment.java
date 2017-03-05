@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rachelleignacio.listbucket.R;
-import com.rachelleignacio.listbucket.adapters.ListsAdapter;
+import com.rachelleignacio.listbucket.adapters.ListItemsAdapter;
 import com.rachelleignacio.listbucket.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.util.MockDataUtil;
@@ -19,12 +19,12 @@ import com.rachelleignacio.listbucket.util.MockDataUtil;
  * Created by rachelleignacio on 3/4/17.
  */
 
-public class MainListBucketFragment extends Fragment implements OnStartDragListener {
+public class ListItemsFragment extends Fragment implements OnStartDragListener {
 
-    private ItemTouchHelper listTouchListener;
+    private ItemTouchHelper itemTouchListener;
 
-    public static MainListBucketFragment newInstance() {
-        return new MainListBucketFragment();
+    public static ListItemsFragment newInstance(int listId) {
+        return new ListItemsFragment();
     }
 
     @Override
@@ -35,24 +35,24 @@ public class MainListBucketFragment extends Fragment implements OnStartDragListe
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initLists();
+        initListItems();
     }
 
-    private void initLists() {
-        RecyclerView listsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
-        listsRecyclerView.setHasFixedSize(true);
-        listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    private void initListItems() {
+        RecyclerView itemsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
+        itemsRecyclerView.setHasFixedSize(true);
+        itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ListsAdapter listsAdapter = new ListsAdapter(getActivity(), MockDataUtil.getListBucket());
-        listsRecyclerView.setAdapter(listsAdapter);
+        ListItemsAdapter itemsAdapter = new ListItemsAdapter(MockDataUtil.getListItems());
+        itemsRecyclerView.setAdapter(itemsAdapter);
 
-        ItemTouchHelper.Callback listTouchCallback = new ListTouchListenerCallback(listsAdapter);
-        listTouchListener = new ItemTouchHelper(listTouchCallback);
-        listTouchListener.attachToRecyclerView(listsRecyclerView);
+        ItemTouchHelper.Callback itemTouchCallback = new ListTouchListenerCallback(itemsAdapter);
+        itemTouchListener = new ItemTouchHelper(itemTouchCallback);
+        itemTouchListener.attachToRecyclerView(itemsRecyclerView);
     }
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        listTouchListener.startDrag(viewHolder);
+        itemTouchListener.startDrag(viewHolder);
     }
 }

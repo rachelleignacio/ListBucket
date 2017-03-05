@@ -21,7 +21,7 @@ public class MockDataUtil {
     public static List<ListItem> getListItems() {
         ArrayList<com.rachelleignacio.listbucket.models.ListItem> mockListItems = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            mockListItems.add(new com.rachelleignacio.listbucket.models.ListItem(i, "List #"+i));
+            mockListItems.add(new com.rachelleignacio.listbucket.models.ListItem(i, "List Item #"+i));
         }
         return mockListItems;
     }

@@ -13,6 +13,6 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_lists_bucket">
+        android:id="@+id/recycler_view_items">
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

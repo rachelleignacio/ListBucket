@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.fragments.MainListBucketFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +39,26 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, MainListBucketFragment.newInstance())
+                .addToBackStack("MainActivityFragmentStack")
                 .commit();
+    }
+
+    public void displayListItems(int listId) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, ListItemsFragment.newInstance(listId))
+                .addToBackStack("MainActivityFragmentStack")
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 1) {
+            moveTaskToBack(false);
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
 
     @Override
