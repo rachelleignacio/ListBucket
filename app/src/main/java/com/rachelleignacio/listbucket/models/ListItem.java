@@ -8,4 +8,9 @@ public class ListItem {
     private int id;
     private int parentListId;
     private String name;
+
+    public ListItem(int parentId, String name) {
+        this.parentListId = parentId;
+        this.name = name;
+    }
 }

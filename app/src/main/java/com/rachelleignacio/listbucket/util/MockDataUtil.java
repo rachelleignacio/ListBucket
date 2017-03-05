@@ -1,5 +1,7 @@
 package com.rachelleignacio.listbucket.util;
 
+import com.rachelleignacio.listbucket.models.ListItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,5 +16,13 @@ public class MockDataUtil {
             mockList.add(new com.rachelleignacio.listbucket.models.List("List #"+i));
         }
         return mockList;
+    }
+
+    public static List<ListItem> getListItems() {
+        ArrayList<com.rachelleignacio.listbucket.models.ListItem> mockListItems = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            mockListItems.add(new com.rachelleignacio.listbucket.models.ListItem(i, "List #"+i));
+        }
+        return mockListItems;
     }
 }
