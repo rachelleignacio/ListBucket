@@ -17,7 +17,7 @@ public class ListTouchListenerCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        int swipeFlags = 0; //ItemTouchHelper.START | ItemTouchHelper.END; TODO: implement swipe to delete
+        int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
@@ -37,11 +37,11 @@ public class ListTouchListenerCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return false; // TODO : implement swipe to delete
+        return true;
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        // TODO : implement swipe to delete
+        listTouchListener.onListDismiss(viewHolder.getAdapterPosition());
     }
 }

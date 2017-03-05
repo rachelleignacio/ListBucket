@@ -65,4 +65,10 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
         }
         notifyItemMoved(fromPosition, toPosition);
     }
+
+    @Override
+    public void onListDismiss(int position) {
+        lists.remove(position);
+        notifyItemRemoved(position);
+    }
 }

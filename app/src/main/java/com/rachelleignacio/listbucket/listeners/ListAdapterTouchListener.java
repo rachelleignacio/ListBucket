@@ -6,5 +6,5 @@ package com.rachelleignacio.listbucket.listeners;
 
 public interface ListAdapterTouchListener {
     void onListDrag(int fromPosition, int toPosition);
-//    void onListDismiss(int position); TODO : implement swipe to delete
+    void onListDismiss(int position);
 }
