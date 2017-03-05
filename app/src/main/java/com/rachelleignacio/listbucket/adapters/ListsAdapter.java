@@ -7,13 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.models.List;
+
+import java.util.Collections;
 
 /**
  * Created by rachelleignacio on 3/1/17.
  */
 
-public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> {
+public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
+        implements ListAdapterTouchListener {
+
     private java.util.List<List> lists;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,5 +50,19 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return lists.size();
+    }
+
+    @Override
+    public void onListDrag(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(lists, i, i+1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(lists, i, i-1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
     }
 }
