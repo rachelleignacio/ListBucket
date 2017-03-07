@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.fragments.CreateListDialogFragment;
 import com.rachelleignacio.listbucket.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.fragments.MainListBucketFragment;
+import com.rachelleignacio.listbucket.interactors.CreateListInteractor;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CreateListInteractor.Callback {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +27,25 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                onAddButtonClicked();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
         if (savedInstanceState == null) {
             displayLists();
         }
+    }
+
+    private void onAddButtonClicked() {
+        CreateListDialogFragment.newInstance(this)
+                .show(getSupportFragmentManager(), CreateListDialogFragment.TAG);
+    }
+
+    @Override
+    public void onListCreated() {
+        displayLists();
     }
 
     private void displayLists() {

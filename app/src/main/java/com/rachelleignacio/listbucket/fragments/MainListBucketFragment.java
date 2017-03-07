@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.adapters.ListsAdapter;
+import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.util.MockDataUtil;
@@ -43,7 +44,7 @@ public class MainListBucketFragment extends Fragment implements OnStartDragListe
         listsRecyclerView.setHasFixedSize(true);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ListsAdapter listsAdapter = new ListsAdapter(getActivity(), MockDataUtil.getListBucket());
+        ListsAdapter listsAdapter = new ListsAdapter(getActivity(), DbInteractor.getInstance().getAllLists());
         listsRecyclerView.setAdapter(listsAdapter);
 
         ItemTouchHelper.Callback listTouchCallback = new ListTouchListenerCallback(listsAdapter);
