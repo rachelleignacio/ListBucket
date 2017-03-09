@@ -9,18 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/create_list_name_edittext"
-        android:minLines="3"
+        android:minLines="2"
         android:hint="@string/create_list_edittext_hint"
         android:background="@android:color/transparent"
-        android:layout_gravity="top"
+        android:gravity="top"
         android:padding="8dp"/>
 
     <TextView
-        android:text="@string/create_list_button_text"
+        android:text="+"
         android:id="@+id/create_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/holo_green_light"
         android:gravity="center"/>
 </LinearLayout>
