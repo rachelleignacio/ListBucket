@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.activities.MainActivity;
+import com.rachelleignacio.listbucket.db.DbInteractor;
+import com.rachelleignacio.listbucket.executor.impl.MainThreadImpl;
+import com.rachelleignacio.listbucket.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.interactors.impl.DeleteListInteractorImpl;
 import com.rachelleignacio.listbucket.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.models.List;
 
@@ -69,8 +73,10 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
 
     @Override
     public void onListDismiss(int position) {
-        lists.remove(position);
-        notifyItemRemoved(position);
+        DeleteListInteractorImpl deleteListInteractor =
+                new DeleteListInteractorImpl(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
+                        (MainActivity) context, DbInteractor.getInstance(), lists.get(position));
+        deleteListInteractor.execute();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

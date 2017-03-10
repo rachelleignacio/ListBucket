@@ -15,9 +15,11 @@ import com.rachelleignacio.listbucket.fragments.CreateListDialogFragment;
 import com.rachelleignacio.listbucket.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.fragments.MainListBucketFragment;
 import com.rachelleignacio.listbucket.interactors.CreateListInteractor;
+import com.rachelleignacio.listbucket.interactors.DeleteListInteractor;
 import com.rachelleignacio.listbucket.models.List;
 
-public class MainActivity extends AppCompatActivity implements CreateListInteractor.Callback {
+public class MainActivity extends AppCompatActivity implements CreateListInteractor.Callback,
+        DeleteListInteractor.Callback {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements CreateListInterac
 
     @Override
     public void onListCreated() {
+        displayLists();
+    }
+
+    @Override
+    public void onListDeleted() {
         displayLists();
     }
 
