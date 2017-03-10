@@ -12,15 +12,20 @@ import android.view.ViewGroup;
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.adapters.ListsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
+import com.rachelleignacio.listbucket.executor.impl.MainThreadImpl;
+import com.rachelleignacio.listbucket.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.interactors.GetListBucketInteractor;
+import com.rachelleignacio.listbucket.interactors.impl.GetListBucketInteractorImpl;
 import com.rachelleignacio.listbucket.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.listeners.OnStartDragListener;
-import com.rachelleignacio.listbucket.util.MockDataUtil;
+import com.rachelleignacio.listbucket.models.List;
 
 /**
  * Created by rachelleignacio on 3/4/17.
  */
 
-public class MainListBucketFragment extends Fragment implements OnStartDragListener {
+public class MainListBucketFragment extends Fragment
+        implements GetListBucketInteractor.Callback, OnStartDragListener {
 
     private ItemTouchHelper listTouchListener;
 
@@ -40,11 +45,20 @@ public class MainListBucketFragment extends Fragment implements OnStartDragListe
     }
 
     private void initLists() {
+        GetListBucketInteractor getListsInterator = new GetListBucketInteractorImpl(ThreadExecutor.getInstance(),
+                MainThreadImpl.getInstance(),
+                this,
+                DbInteractor.getInstance());
+        getListsInterator.execute();
+    }
+
+    @Override
+    public void onListsRetrieved(java.util.List<List> lists) {
         RecyclerView listsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
         listsRecyclerView.setHasFixedSize(true);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ListsAdapter listsAdapter = new ListsAdapter(getActivity(), DbInteractor.getInstance().getAllLists());
+        ListsAdapter listsAdapter = new ListsAdapter(getActivity(), lists);
         listsRecyclerView.setAdapter(listsAdapter);
 
         ItemTouchHelper.Callback listTouchCallback = new ListTouchListenerCallback(listsAdapter);

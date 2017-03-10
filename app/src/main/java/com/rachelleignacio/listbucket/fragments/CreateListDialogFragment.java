@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.interactors.CreateListInteractor;
@@ -53,9 +54,12 @@ public class CreateListDialogFragment extends DialogFragment {
                     Toast.makeText(getActivity(), getString(R.string.create_list_error_toast_msg),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    new CreateListInteractorImpl(ThreadExecutor.getInstance(),
-                            MainThreadImpl.getInstance(), callback,
-                            editTextBox.getText().toString()).execute();
+                    CreateListInteractor createListInteractor = new CreateListInteractorImpl(ThreadExecutor.getInstance(),
+                            MainThreadImpl.getInstance(),
+                            callback,
+                            DbInteractor.getInstance(),
+                            editTextBox.getText().toString());
+                    createListInteractor.execute();
                     dismiss();
                 }
             }

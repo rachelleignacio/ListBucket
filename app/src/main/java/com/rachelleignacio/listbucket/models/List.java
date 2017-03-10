@@ -46,14 +46,4 @@ public class List extends BaseModel implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    @ColumnIgnore
-    private java.util.List<ListItem> listItems;
-
-    public java.util.List<ListItem> getListItems() {
-        if (listItems == null || listItems.isEmpty()) {
-            listItems = DbInteractor.getInstance().getListItems(id);
-        }
-        return listItems;
-    }
 }

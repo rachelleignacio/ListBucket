@@ -13,18 +13,20 @@ import com.rachelleignacio.listbucket.models.List;
 
 public class CreateListInteractorImpl extends AbstractInteractor implements CreateListInteractor {
     private CreateListInteractor.Callback callback;
+    private DbInteractor database;
     private String listName;
 
     public CreateListInteractorImpl(Executor threadExecutor, MainThread mainThread,
-            Callback callback, String name) {
+                                    Callback callback, DbInteractor db, String name) {
         super(threadExecutor, mainThread);
         this.callback = callback;
+        this.database = db;
         this.listName = name;
     }
 
     @Override
     public void run() {
-        DbInteractor.getInstance().saveList(new List(listName));
+        database.saveList(new List(listName));
         mainThread.post(new Runnable() {
             @Override
             public void run() {

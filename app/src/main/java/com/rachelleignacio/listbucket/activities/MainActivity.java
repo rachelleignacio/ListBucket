@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.fragments.CreateListDialogFragment;
 import com.rachelleignacio.listbucket.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.fragments.MainListBucketFragment;
 import com.rachelleignacio.listbucket.interactors.CreateListInteractor;
+import com.rachelleignacio.listbucket.models.List;
 
 public class MainActivity extends AppCompatActivity implements CreateListInteractor.Callback {
 
@@ -23,32 +25,13 @@ public class MainActivity extends AppCompatActivity implements CreateListInterac
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAddButtonClicked();
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-            }
-        });
-
         if (savedInstanceState == null) {
             displayLists();
         }
     }
 
-    private void onAddButtonClicked() {
-        CreateListDialogFragment.newInstance(this)
-                .show(getSupportFragmentManager(), CreateListDialogFragment.TAG);
-    }
-
-    @Override
-    public void onListCreated() {
-        displayLists();
-    }
-
     private void displayLists() {
+        showFabAddButton();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, MainListBucketFragment.newInstance())
@@ -56,12 +39,34 @@ public class MainActivity extends AppCompatActivity implements CreateListInterac
                 .commit();
     }
 
-    public void displayListItems(int listId) {
+    public void displayListItems(List listToDisplay) {
+        hideFabAddButton();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, ListItemsFragment.newInstance(listId))
+                .replace(R.id.content_frame, ListItemsFragment.newInstance(listToDisplay))
                 .addToBackStack("MainActivityFragmentStack")
                 .commit();
+    }
+
+    private void showFabAddButton() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateListDialogFragment.newInstance(MainActivity.this)
+                        .show(getSupportFragmentManager(), CreateListDialogFragment.TAG);
+            }
+        });
+    }
+
+    private void hideFabAddButton() {
+        findViewById(R.id.fab).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onListCreated() {
+        displayLists();
     }
 
     @Override
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements CreateListInterac
         if (count == 1) {
             moveTaskToBack(false);
         } else {
+            showFabAddButton();
             getSupportFragmentManager().popBackStack();
         }
     }

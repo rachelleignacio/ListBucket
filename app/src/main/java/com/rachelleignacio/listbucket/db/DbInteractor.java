@@ -41,4 +41,8 @@ public class DbInteractor {
     public void saveList(List list) {
         list.save();
     }
+
+    public void saveListItem(ListItem item) {
+        item.save();
+    }
 }
