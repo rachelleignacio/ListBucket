@@ -31,7 +31,7 @@ public class ListTouchListenerCallback extends ItemTouchHelper.Callback {
         if (viewHolder.getItemViewType() != target.getItemViewType()) {
             return false;
         }
-        listTouchListener.onListDrag(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        listTouchListener.onRowDrag(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return true;
     }
 
@@ -42,6 +42,6 @@ public class ListTouchListenerCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        listTouchListener.onListDismiss(viewHolder.getAdapterPosition());
+        listTouchListener.onRowDismiss(viewHolder.getAdapterPosition());
     }
 }

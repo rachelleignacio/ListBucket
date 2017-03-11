@@ -58,7 +58,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
     }
 
     @Override
-    public void onListDrag(int fromPosition, int toPosition) {
+    public void onRowDrag(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(lists, i, i+1);
@@ -72,7 +72,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
     }
 
     @Override
-    public void onListDismiss(int position) {
+    public void onRowDismiss(int position) {
         DeleteListInteractorImpl deleteListInteractor =
                 new DeleteListInteractorImpl(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
                         (MainActivity) context, DbInteractor.getInstance(), lists.get(position));

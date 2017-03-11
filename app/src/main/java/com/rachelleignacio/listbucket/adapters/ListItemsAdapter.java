@@ -7,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.db.DbInteractor;
+import com.rachelleignacio.listbucket.executor.impl.MainThreadImpl;
+import com.rachelleignacio.listbucket.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.interactors.DeleteListItemInteractor;
+import com.rachelleignacio.listbucket.interactors.impl.DeleteListItemInteractorImpl;
 import com.rachelleignacio.listbucket.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.models.ListItem;
 
@@ -19,9 +24,12 @@ import java.util.Collections;
 public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.ViewHolder>
         implements ListAdapterTouchListener {
     private java.util.List<ListItem> listItems;
+    private DeleteListItemInteractor.Callback deleteListItemCallback;
 
-    public ListItemsAdapter(java.util.List<ListItem> listItems) {
+    public ListItemsAdapter(java.util.List<ListItem> listItems,
+                            DeleteListItemInteractor.Callback deleteListItemCallback) {
         this.listItems = listItems;
+        this.deleteListItemCallback = deleteListItemCallback;
     }
 
     @Override
@@ -43,7 +51,7 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
     }
 
     @Override
-    public void onListDrag(int fromPosition, int toPosition) {
+    public void onRowDrag(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(listItems, i, i+1);
@@ -57,9 +65,11 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
     }
 
     @Override
-    public void onListDismiss(int position) {
-        listItems.remove(position);
-        notifyItemRemoved(position);
+    public void onRowDismiss(int position) {
+        DeleteListItemInteractor deleteListItemInteractor =
+                new DeleteListItemInteractorImpl(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
+                        deleteListItemCallback, DbInteractor.getInstance(), listItems.get(position));
+        deleteListItemInteractor.execute();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

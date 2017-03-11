@@ -19,6 +19,7 @@ import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.interactors.AddListItemInteractor;
+import com.rachelleignacio.listbucket.interactors.DeleteListItemInteractor;
 import com.rachelleignacio.listbucket.interactors.GetAllListItemsInteractor;
 import com.rachelleignacio.listbucket.interactors.impl.AddListItemInteractorImpl;
 import com.rachelleignacio.listbucket.interactors.impl.GetAllListItemsInteractorImpl;
@@ -31,11 +32,10 @@ import com.rachelleignacio.listbucket.models.ListItem;
  * Created by rachelleignacio on 3/4/17.
  */
 
-public class ListItemsFragment extends Fragment
-        implements GetAllListItemsInteractor.Callback, AddListItemInteractor.Callback, OnStartDragListener {
+public class ListItemsFragment extends Fragment implements GetAllListItemsInteractor.Callback,
+        AddListItemInteractor.Callback, DeleteListItemInteractor.Callback, OnStartDragListener {
 
     private List parentList;
-    private ListItemsAdapter itemsAdapter;
     private ItemTouchHelper itemTouchListener;
 
     public static ListItemsFragment newInstance(List list) {
@@ -96,7 +96,7 @@ public class ListItemsFragment extends Fragment
         itemsRecyclerView.setHasFixedSize(true);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        itemsAdapter = new ListItemsAdapter(items);
+        ListItemsAdapter itemsAdapter = new ListItemsAdapter(items, this);
         itemsRecyclerView.setAdapter(itemsAdapter);
 
         ItemTouchHelper.Callback itemTouchCallback = new ListTouchListenerCallback(itemsAdapter);
@@ -106,6 +106,11 @@ public class ListItemsFragment extends Fragment
 
     @Override
     public void onListItemAdded() {
+        initListItems();
+    }
+
+    @Override
+    public void onListItemDeleted() {
         initListItems();
     }
 
