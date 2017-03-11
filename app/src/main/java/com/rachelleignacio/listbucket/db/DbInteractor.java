@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.db;
 
-import com.rachelleignacio.listbucket.models.List;
-import com.rachelleignacio.listbucket.models.ListItem;
-import com.rachelleignacio.listbucket.models.ListItem_Table;
+import com.rachelleignacio.listbucket.domain.models.List;
+import com.rachelleignacio.listbucket.domain.models.ListItem;
+import com.rachelleignacio.listbucket.domain.models.ListItem_Table;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
@@ -26,8 +26,8 @@ public class DbInteractor {
      * Method for getting all the stored lists.
      * @return a list of Lists
      */
-    public java.util.List<com.rachelleignacio.listbucket.models.List> getAllLists() {
-        return SQLite.select().from(com.rachelleignacio.listbucket.models.List.class).queryList();
+    public java.util.List<com.rachelleignacio.listbucket.domain.models.List> getAllLists() {
+        return SQLite.select().from(com.rachelleignacio.listbucket.domain.models.List.class).queryList();
     }
 
     /**
