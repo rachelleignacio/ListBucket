@@ -14,7 +14,6 @@ import com.rachelleignacio.listbucket.adapters.ListsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.executor.impl.ThreadExecutor;
-import com.rachelleignacio.listbucket.interactors.DeleteListInteractor;
 import com.rachelleignacio.listbucket.interactors.GetListBucketInteractor;
 import com.rachelleignacio.listbucket.interactors.impl.GetListBucketInteractorImpl;
 import com.rachelleignacio.listbucket.listeners.ListTouchListenerCallback;

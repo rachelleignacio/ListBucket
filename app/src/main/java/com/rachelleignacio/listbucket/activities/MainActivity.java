@@ -2,7 +2,6 @@ package com.rachelleignacio.listbucket.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rachelleignacio.listbucket.R;
-import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.fragments.CreateListDialogFragment;
 import com.rachelleignacio.listbucket.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.fragments.MainListBucketFragment;

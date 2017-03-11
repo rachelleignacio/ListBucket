@@ -2,11 +2,11 @@ package com.rachelleignacio.listbucket.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,12 +106,17 @@ public class ListItemsFragment extends Fragment implements GetAllListItemsIntera
 
     @Override
     public void onListItemAdded() {
-        initListItems();
+        refreshFragment();
     }
 
     @Override
     public void onListItemDeleted() {
-        initListItems();
+        refreshFragment();
+    }
+
+    private void refreshFragment() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
     }
 
     @Override
