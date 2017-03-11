@@ -1,2 +1,2 @@
 # ListBucket
-A simple to-do list app
+A simple list app
