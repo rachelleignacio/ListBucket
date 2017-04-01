@@ -9,21 +9,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rachelleignacio.listbucket.R;
-import com.rachelleignacio.listbucket.presentation.fragments.CreateListDialogFragment;
+import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
+import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment;
-import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
-import com.rachelleignacio.listbucket.domain.interactors.DeleteListInteractor;
 import com.rachelleignacio.listbucket.domain.models.List;
+import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter;
+import com.rachelleignacio.listbucket.presentation.presenters.impl.MainActivityPresenterImpl;
 
-public class MainActivity extends AppCompatActivity implements CreateListInteractor.Callback,
-        DeleteListInteractor.Callback {
+public class MainActivity extends AppCompatActivity implements MainActivityPresenter.View {
+
+    private MainActivityPresenter mainActivityPresenter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mainActivityPresenter = new MainActivityPresenterImpl(ThreadExecutor.getInstance(),
+                MainThreadImpl.getInstance(), this);
 
         if (savedInstanceState == null) {
             displayLists();
@@ -48,14 +53,29 @@ public class MainActivity extends AppCompatActivity implements CreateListInterac
                 .commit();
     }
 
+    @Override
+    public void showLists() {
+        displayLists();
+    }
+
+    @Override
+    public void onClickCreateList() {
+        mainActivityPresenter.showCreateListDialog(getSupportFragmentManager());
+    }
+
+    @Override
+    public void onListSwipedToDelete(List listToDelete) {
+        mainActivityPresenter.deleteListFromBucket(listToDelete);
+    }
+
+
     private void showFabAddButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreateListDialogFragment.newInstance(MainActivity.this)
-                        .show(getSupportFragmentManager(), CreateListDialogFragment.TAG);
+                onClickCreateList();
             }
         });
     }
@@ -64,15 +84,15 @@ public class MainActivity extends AppCompatActivity implements CreateListInterac
         findViewById(R.id.fab).setVisibility(View.GONE);
     }
 
-    @Override
-    public void onListCreated() {
-        displayLists();
-    }
-
-    @Override
-    public void onListDeleted() {
-        displayLists();
-    }
+//    @Override
+//    public void onListCreated() {
+//        displayLists();
+//    }
+//
+//    @Override
+//    public void onListDeleted() {
+//        displayLists();
+//    }
 
     @Override
     public void onBackPressed() {

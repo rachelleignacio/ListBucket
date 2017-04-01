@@ -73,10 +73,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
 
     @Override
     public void onRowDismiss(int position) {
-        DeleteListInteractorImpl deleteListInteractor =
-                new DeleteListInteractorImpl(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                        (MainActivity) context, DbInteractor.getInstance(), lists.get(position));
-        deleteListInteractor.execute();
+        ((MainActivity) context).onListSwipedToDelete(lists.get(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
