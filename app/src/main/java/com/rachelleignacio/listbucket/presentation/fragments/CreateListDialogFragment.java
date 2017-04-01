@@ -13,7 +13,8 @@ import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
-import com.rachelleignacio.listbucket.domain.interactors.impl.CreateListInteractorImpl;
+import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragmentPresenter;
+import com.rachelleignacio.listbucket.presentation.presenters.impl.CreateListFragmentPresenterImpl;
 
 /**
  * Created by rachelleignacio on 3/6/17.
@@ -24,6 +25,7 @@ public class CreateListDialogFragment extends DialogFragment {
 
     private EditText editTextBox;
     private CreateListInteractor.Callback callback;
+    private CreateListFragmentPresenter presenter;
 
     public static CreateListDialogFragment newInstance(CreateListInteractor.Callback callback) {
         CreateListDialogFragment fragment = new CreateListDialogFragment();
@@ -45,6 +47,8 @@ public class CreateListDialogFragment extends DialogFragment {
         }
 
         editTextBox = (EditText) getView().findViewById(R.id.create_list_name_edittext);
+        presenter = new CreateListFragmentPresenterImpl(ThreadExecutor.getInstance(),
+                MainThreadImpl.getInstance(), callback, DbInteractor.getInstance());
 
         getView().findViewById(R.id.create_list_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,12 +57,7 @@ public class CreateListDialogFragment extends DialogFragment {
                     Toast.makeText(getActivity(), getString(R.string.create_list_error_toast_msg),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    CreateListInteractor createListInteractor = new CreateListInteractorImpl(ThreadExecutor.getInstance(),
-                            MainThreadImpl.getInstance(),
-                            callback,
-                            DbInteractor.getInstance(),
-                            editTextBox.getText().toString());
-                    createListInteractor.execute();
+                    presenter.createList(editTextBox.getText().toString());
                     dismiss();
                 }
             }

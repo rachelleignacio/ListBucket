@@ -84,16 +84,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         findViewById(R.id.fab).setVisibility(View.GONE);
     }
 
-//    @Override
-//    public void onListCreated() {
-//        displayLists();
-//    }
-//
-//    @Override
-//    public void onListDeleted() {
-//        displayLists();
-//    }
-
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();

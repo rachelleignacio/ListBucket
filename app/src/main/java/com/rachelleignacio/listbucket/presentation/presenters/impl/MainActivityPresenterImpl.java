@@ -38,9 +38,8 @@ public class MainActivityPresenterImpl extends AbstractPresenter implements Main
 
     @Override
     public void deleteListFromBucket(List listToDelete) {
-        DeleteListInteractorImpl deleteListInteractor =
-                new DeleteListInteractorImpl(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                        this, DbInteractor.getInstance(), listToDelete);
+        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(executor,
+                mainThread, this, DbInteractor.getInstance(), listToDelete);
         deleteListInteractor.execute();
     }
 
