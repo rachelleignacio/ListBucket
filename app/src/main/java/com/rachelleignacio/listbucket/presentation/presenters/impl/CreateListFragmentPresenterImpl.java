@@ -3,8 +3,6 @@ package com.rachelleignacio.listbucket.presentation.presenters.impl;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
-import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.impl.CreateListInteractorImpl;
 import com.rachelleignacio.listbucket.presentation.presenters.AbstractPresenter;

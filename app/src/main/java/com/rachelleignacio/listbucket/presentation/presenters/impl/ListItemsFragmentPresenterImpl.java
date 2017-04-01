@@ -3,8 +3,6 @@ package com.rachelleignacio.listbucket.presentation.presenters.impl;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
-import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.AddListItemInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.DeleteListItemInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.GetAllListItemsInteractor;
@@ -29,7 +27,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
     private DbInteractor dbInteractor;
     private com.rachelleignacio.listbucket.domain.models.List parentList;
     private ListItemsFragmentPresenter.View view;
-    
+
     public ListItemsFragmentPresenterImpl(Executor executor, MainThread mainThread, DbInteractor db,
                                           View view, com.rachelleignacio.listbucket.domain.models.List parent) {
         super(executor, mainThread);

@@ -7,11 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rachelleignacio.listbucket.R;
-import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
-import com.rachelleignacio.listbucket.domain.interactors.DeleteListItemInteractor;
-import com.rachelleignacio.listbucket.domain.interactors.impl.DeleteListItemInteractorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;

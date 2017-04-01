@@ -5,9 +5,5 @@ package com.rachelleignacio.listbucket.presentation.presenters;
  */
 
 public interface CreateListFragmentPresenter {
-    interface View {
-        void onListCreated();
-    }
-
     void createList(String listName);
 }
