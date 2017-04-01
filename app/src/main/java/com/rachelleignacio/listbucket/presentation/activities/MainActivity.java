@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         setSupportActionBar(toolbar);
 
         mainActivityPresenter = new MainActivityPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), this);
+                MainThreadImpl.getInstance(), DbInteractor.getInstance(), this);
 
         if (savedInstanceState == null) {
             displayLists();

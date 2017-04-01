@@ -16,19 +16,19 @@ import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragment
 
 public class CreateListFragmentPresenterImpl extends AbstractPresenter implements CreateListFragmentPresenter {
     private CreateListInteractor.Callback callback;
-    private DbInteractor database;
+    private DbInteractor dbInteractor;
 
     public CreateListFragmentPresenterImpl(Executor executor, MainThread mainThread,
                                            CreateListInteractor.Callback callback, DbInteractor db) {
         super(executor, mainThread);
         this.callback = callback;
-        this.database = db;
+        this.dbInteractor = db;
     }
 
     @Override
     public void createList(String listName) {
         CreateListInteractor createListInteractor = new CreateListInteractorImpl(executor,
-                mainThread, callback, database, listName);
+                mainThread, callback, dbInteractor, listName);
         createListInteractor.execute();
     }
 }

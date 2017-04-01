@@ -5,13 +5,10 @@ import android.support.v4.app.FragmentManager;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
-import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.DeleteListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.impl.DeleteListInteractorImpl;
 import com.rachelleignacio.listbucket.domain.models.List;
-import com.rachelleignacio.listbucket.presentation.activities.MainActivity;
 import com.rachelleignacio.listbucket.presentation.fragments.CreateListDialogFragment;
 import com.rachelleignacio.listbucket.presentation.presenters.AbstractPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter;
@@ -23,10 +20,13 @@ import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresen
 public class MainActivityPresenterImpl extends AbstractPresenter implements MainActivityPresenter,
         CreateListInteractor.Callback, DeleteListInteractor.Callback {
 
+    private DbInteractor dbInteractor;
     private MainActivityPresenter.View view;
 
-    public MainActivityPresenterImpl(Executor executor, MainThread mainThread, View view) {
+    public MainActivityPresenterImpl(Executor executor, MainThread mainThread,
+                                     DbInteractor database, View view) {
         super(executor, mainThread);
+        this.dbInteractor = database;
         this.view = view;
     }
 
@@ -39,7 +39,7 @@ public class MainActivityPresenterImpl extends AbstractPresenter implements Main
     @Override
     public void deleteListFromBucket(List listToDelete) {
         DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(executor,
-                mainThread, this, DbInteractor.getInstance(), listToDelete);
+                mainThread, this, dbInteractor, listToDelete);
         deleteListInteractor.execute();
     }
 

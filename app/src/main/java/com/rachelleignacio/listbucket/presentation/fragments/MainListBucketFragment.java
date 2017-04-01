@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.domain.executor.MainThread;
 import com.rachelleignacio.listbucket.presentation.adapters.ListsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
@@ -19,15 +20,18 @@ import com.rachelleignacio.listbucket.domain.interactors.impl.GetListBucketInter
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.presentation.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.domain.models.List;
+import com.rachelleignacio.listbucket.presentation.presenters.MainListBucketFragmentPresenter;
+import com.rachelleignacio.listbucket.presentation.presenters.impl.MainListBucketFragmentPresenterImpl;
 
 /**
  * Created by rachelleignacio on 3/4/17.
  */
 
 public class MainListBucketFragment extends Fragment
-        implements GetListBucketInteractor.Callback, OnStartDragListener {
+        implements MainListBucketFragmentPresenter.View, OnStartDragListener {
 
     private ItemTouchHelper listTouchListener;
+    private MainListBucketFragmentPresenter presenter;
 
     public static MainListBucketFragment newInstance() {
         return new MainListBucketFragment();
@@ -41,15 +45,15 @@ public class MainListBucketFragment extends Fragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        presenter = new MainListBucketFragmentPresenterImpl(ThreadExecutor.getInstance(),
+                MainThreadImpl.getInstance(), DbInteractor.getInstance(), this);
+
         initLists();
     }
 
     private void initLists() {
-        GetListBucketInteractor getListsInterator = new GetListBucketInteractorImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(),
-                this,
-                DbInteractor.getInstance());
-        getListsInterator.execute();
+        presenter.getLists();
     }
 
     @Override
