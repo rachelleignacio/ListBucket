@@ -27,16 +27,19 @@ import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCa
 import com.rachelleignacio.listbucket.presentation.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
+import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
+import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl;
 
 /**
  * Created by rachelleignacio on 3/4/17.
  */
 
-public class ListItemsFragment extends Fragment implements GetAllListItemsInteractor.Callback,
-        AddListItemInteractor.Callback, DeleteListItemInteractor.Callback, OnStartDragListener {
+public class ListItemsFragment extends Fragment implements ListItemsFragmentPresenter.View,
+        OnStartDragListener {
 
     private List parentList;
     private ItemTouchHelper itemTouchListener;
+    private ListItemsFragmentPresenter presenter;
 
     public static ListItemsFragment newInstance(List list) {
         ListItemsFragment fragment = new ListItemsFragment();
@@ -52,17 +55,16 @@ public class ListItemsFragment extends Fragment implements GetAllListItemsIntera
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        presenter = new ListItemsFragmentPresenterImpl(ThreadExecutor.getInstance(),
+                MainThreadImpl.getInstance(), DbInteractor.getInstance(), this, parentList);
+
         initListItems();
         initAddListItemView();
     }
 
     private void initListItems() {
-        GetAllListItemsInteractor getItemsInteractor = new GetAllListItemsInteractorImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(),
-                ListItemsFragment.this,
-                DbInteractor.getInstance(),
-                parentList.getId());
-        getItemsInteractor.execute();
+        presenter.getListItems();
     }
 
     private void initAddListItemView() {
@@ -74,13 +76,7 @@ public class ListItemsFragment extends Fragment implements GetAllListItemsIntera
             @Override
             public void onClick(View view) {
                 if (addListItemTextbox.getText().length() > 0) {
-                    AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(ThreadExecutor.getInstance(),
-                            MainThreadImpl.getInstance(),
-                            ListItemsFragment.this,
-                            DbInteractor.getInstance(),
-                            parentList,
-                            addListItemTextbox.getText().toString());
-                    addItemInteractor.execute();
+                    presenter.addListItem(addListItemTextbox.getText().toString());
                     addListItemTextbox.setText("");
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.add_list_item_error_toast_msg),
@@ -91,7 +87,7 @@ public class ListItemsFragment extends Fragment implements GetAllListItemsIntera
     }
 
     @Override
-    public void onListItemsRetrieved(java.util.List<ListItem> items) {
+    public void showListItems(java.util.List<ListItem> items) {
         RecyclerView itemsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
         itemsRecyclerView.setHasFixedSize(true);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -105,16 +101,11 @@ public class ListItemsFragment extends Fragment implements GetAllListItemsIntera
     }
 
     @Override
-    public void onListItemAdded() {
-        refreshFragment();
+    public void onItemSwipedToDelete(ListItem item) {
+        presenter.deleteListItem(item);
     }
 
-    @Override
-    public void onListItemDeleted() {
-        refreshFragment();
-    }
-
-    private void refreshFragment() {
+    public void refreshFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }

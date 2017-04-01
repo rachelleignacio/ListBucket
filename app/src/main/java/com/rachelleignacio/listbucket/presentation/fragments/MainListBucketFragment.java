@@ -10,28 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rachelleignacio.listbucket.R;
-import com.rachelleignacio.listbucket.domain.executor.MainThread;
 import com.rachelleignacio.listbucket.presentation.adapters.ListsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
-import com.rachelleignacio.listbucket.domain.interactors.GetListBucketInteractor;
-import com.rachelleignacio.listbucket.domain.interactors.impl.GetListBucketInteractorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.presentation.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.domain.models.List;
-import com.rachelleignacio.listbucket.presentation.presenters.MainListBucketFragmentPresenter;
-import com.rachelleignacio.listbucket.presentation.presenters.impl.MainListBucketFragmentPresenterImpl;
+import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter;
+import com.rachelleignacio.listbucket.presentation.presenters.impl.ListBucketFragmentPresenterImpl;
 
 /**
  * Created by rachelleignacio on 3/4/17.
  */
 
 public class MainListBucketFragment extends Fragment
-        implements MainListBucketFragmentPresenter.View, OnStartDragListener {
+        implements ListBucketFragmentPresenter.View, OnStartDragListener {
 
     private ItemTouchHelper listTouchListener;
-    private MainListBucketFragmentPresenter presenter;
+    private ListBucketFragmentPresenter presenter;
 
     public static MainListBucketFragment newInstance() {
         return new MainListBucketFragment();
@@ -46,7 +43,7 @@ public class MainListBucketFragment extends Fragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new MainListBucketFragmentPresenterImpl(ThreadExecutor.getInstance(),
+        presenter = new ListBucketFragmentPresenterImpl(ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(), DbInteractor.getInstance(), this);
 
         initLists();
@@ -57,7 +54,7 @@ public class MainListBucketFragment extends Fragment
     }
 
     @Override
-    public void onListsRetrieved(java.util.List<List> lists) {
+    public void showLists(java.util.List<List> lists) {
         RecyclerView listsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
         listsRecyclerView.setHasFixedSize(true);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

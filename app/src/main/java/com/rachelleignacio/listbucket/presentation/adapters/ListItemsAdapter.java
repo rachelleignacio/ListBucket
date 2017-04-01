@@ -14,6 +14,7 @@ import com.rachelleignacio.listbucket.domain.interactors.DeleteListItemInteracto
 import com.rachelleignacio.listbucket.domain.interactors.impl.DeleteListItemInteractorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
+import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 
 import java.util.Collections;
 
@@ -24,12 +25,11 @@ import java.util.Collections;
 public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.ViewHolder>
         implements ListAdapterTouchListener {
     private java.util.List<ListItem> listItems;
-    private DeleteListItemInteractor.Callback deleteListItemCallback;
+    private ListItemsFragmentPresenter.View view;
 
-    public ListItemsAdapter(java.util.List<ListItem> listItems,
-                            DeleteListItemInteractor.Callback deleteListItemCallback) {
+    public ListItemsAdapter(java.util.List<ListItem> listItems, ListItemsFragmentPresenter.View view) {
         this.listItems = listItems;
-        this.deleteListItemCallback = deleteListItemCallback;
+        this.view = view;
     }
 
     @Override
@@ -66,10 +66,7 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
 
     @Override
     public void onRowDismiss(int position) {
-        DeleteListItemInteractor deleteListItemInteractor =
-                new DeleteListItemInteractorImpl(ThreadExecutor.getInstance(), MainThreadImpl.getInstance(),
-                        deleteListItemCallback, DbInteractor.getInstance(), listItems.get(position));
-        deleteListItemInteractor.execute();
+        view.onItemSwipedToDelete(listItems.get(position));
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
