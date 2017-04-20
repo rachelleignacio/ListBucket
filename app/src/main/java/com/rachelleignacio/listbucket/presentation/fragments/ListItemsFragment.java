@@ -8,10 +8,13 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rachelleignacio.listbucket.R;
@@ -81,6 +84,17 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
                     Toast.makeText(getActivity(), getString(R.string.add_list_item_error_toast_msg),
                             Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        addListItemTextbox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    getView().findViewById(R.id.add_list_item_submit).callOnClick();
+                    handled = true;
+                }
+                return handled;
             }
         });
     }

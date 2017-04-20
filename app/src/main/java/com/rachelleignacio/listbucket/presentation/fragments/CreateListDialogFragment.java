@@ -3,10 +3,13 @@ package com.rachelleignacio.listbucket.presentation.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rachelleignacio.listbucket.R;
@@ -64,6 +67,17 @@ public class CreateListDialogFragment extends DialogFragment {
                     presenter.createList(editTextBox.getText().toString());
                     dismiss();
                 }
+            }
+        });
+        editTextBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    getView().findViewById(R.id.create_list_button).callOnClick();
+                    handled = true;
+                }
+                return handled;
             }
         });
     }

@@ -21,7 +21,9 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:padding="12dp"
-            android:hint="@string/add_list_item_edittext_hint"/>
+            android:hint="@string/add_list_item_edittext_hint"
+            android:inputType="text"
+            android:imeOptions="actionGo"/>
         <TextView
             android:layout_width="48dp"
             android:layout_height="48dp"

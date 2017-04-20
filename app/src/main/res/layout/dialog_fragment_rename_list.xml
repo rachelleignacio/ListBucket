@@ -12,5 +12,7 @@
         android:minLines="2"
         android:hint="@string/rename_list_edittext_hint"
         android:background="@android:color/transparent"
-        android:gravity="top"/>
+        android:gravity="top"
+        android:inputType="text"
+        android:imeOptions="actionGo"/>
 </LinearLayout>

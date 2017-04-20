@@ -13,7 +13,9 @@
         android:hint="@string/create_list_edittext_hint"
         android:background="@android:color/transparent"
         android:gravity="top"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:inputType="text"
+        android:imeOptions="actionGo"/>
 
     <TextView
         android:text="+"

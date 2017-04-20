@@ -6,8 +6,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rachelleignacio.listbucket.R;
@@ -44,14 +47,28 @@ public class RenameListDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_rename_list, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_rename_list, null);
+
         editTextBox = (EditText) view.findViewById(R.id.rename_list_edittext);
+
+        // TODO: make this work properly
+//        editTextBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                boolean handled = false;
+//                if (actionId == EditorInfo.IME_ACTION_GO) {
+//                    view.findViewById(AlertDialog.BUTTON_POSITIVE).callOnClick();
+//                    handled = true;
+//                }
+//                return handled;
+//            }
+//        });
+
         presenter = new RenameListFragmentPresenterImpl(ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(), callback, DbInteractor.getInstance());
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
-//        builder.setTitle(String.format(getString(R.string.rename_list_dialog_title), listToRename.getName()));
         builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
