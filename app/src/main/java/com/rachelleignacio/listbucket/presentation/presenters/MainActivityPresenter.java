@@ -14,8 +14,10 @@ public interface MainActivityPresenter {
         void showLists();
         void onClickCreateList();
         void onListSwipedToDelete(List listToDelete);
+        void onClickRenameList(List listToRename);
     }
 
     void showCreateListDialog(FragmentManager fragmentManager);
     void deleteListFromBucket(List listToDelete);
+    void showRenameListDialog(FragmentManager fragmentManager, List listToRename);
 }

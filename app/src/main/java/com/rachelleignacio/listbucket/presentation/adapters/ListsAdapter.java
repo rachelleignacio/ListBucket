@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.presentation.activities.MainActivity;
+import com.rachelleignacio.listbucket.presentation.fragments.RenameListDialogFragment;
 import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.domain.models.List;
 
@@ -40,6 +42,12 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
     public void onBindViewHolder(ViewHolder holder, int position) {
         final List list = lists.get(position);
         holder.listNameTv.setText(list.getName());
+        holder.renameListIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) context).onClickRenameList(list);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,12 +80,14 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
         ((MainActivity) context).onListSwipedToDelete(lists.get(position));
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView listNameTv;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView listNameTv;
+        ImageView renameListIv;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             listNameTv = (TextView) itemView.findViewById(R.id.list_name);
+            renameListIv = (ImageView) itemView.findViewById(R.id.rename_list);
         }
     }
 }

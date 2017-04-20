@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         mainActivityPresenter.deleteListFromBucket(listToDelete);
     }
 
+    @Override
+    public void onClickRenameList(List listToRename) {
+        mainActivityPresenter.showRenameListDialog(getSupportFragmentManager(), listToRename);
+    }
+
 
     private void showFabAddButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

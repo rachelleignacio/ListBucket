@@ -6,4 +6,6 @@
     <string name="create_list_error_toast_msg">List must have a name</string>
     <string name="add_list_item_edittext_hint">Add something</string>
     <string name="add_list_item_error_toast_msg">Can\'t add an empty item!</string>
+    <string name="rename_list_edittext_hint">Enter new name</string>
+    <string name="rename_list_dialog_submit">Rename</string>
 </resources>

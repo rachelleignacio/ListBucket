@@ -1,5 +1,6 @@
 package com.rachelleignacio.listbucket.presentation.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,9 @@ public class CreateListDialogFragment extends DialogFragment {
     private EditText editTextBox;
     private CreateListInteractor.Callback callback;
     private CreateListFragmentPresenter presenter;
+
+    @SuppressLint("ValidFragment")
+    private CreateListDialogFragment() {}
 
     public static CreateListDialogFragment newInstance(CreateListInteractor.Callback callback) {
         CreateListDialogFragment fragment = new CreateListDialogFragment();

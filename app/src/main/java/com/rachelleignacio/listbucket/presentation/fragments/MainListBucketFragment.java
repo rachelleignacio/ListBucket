@@ -1,5 +1,6 @@
 package com.rachelleignacio.listbucket.presentation.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,9 @@ public class MainListBucketFragment extends Fragment
 
     private ItemTouchHelper listTouchListener;
     private ListBucketFragmentPresenter presenter;
+
+    @SuppressLint("ValidFragment")
+    private MainListBucketFragment() {}
 
     public static MainListBucketFragment newInstance() {
         return new MainListBucketFragment();

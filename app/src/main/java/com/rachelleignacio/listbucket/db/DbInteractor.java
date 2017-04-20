@@ -68,4 +68,9 @@ public class DbInteractor {
     public void deleteListItem(ListItem item) {
         item.delete();
     }
+
+    public void renameList(List list, String newName) {
+        list.setName(newName);
+        list.update();
+    }
 }

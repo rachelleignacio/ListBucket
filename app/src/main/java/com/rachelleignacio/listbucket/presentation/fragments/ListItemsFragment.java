@@ -1,5 +1,6 @@
 package com.rachelleignacio.listbucket.presentation.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -35,6 +36,9 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     private List parentList;
     private ItemTouchHelper itemTouchListener;
     private ListItemsFragmentPresenter presenter;
+
+    @SuppressLint("ValidFragment")
+    private ListItemsFragment() {}
 
     public static ListItemsFragment newInstance(List list) {
         ListItemsFragment fragment = new ListItemsFragment();
