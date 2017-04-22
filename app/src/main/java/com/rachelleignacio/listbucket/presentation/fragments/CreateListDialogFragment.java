@@ -48,12 +48,6 @@ public class CreateListDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_create_list, null);
 
@@ -93,7 +87,6 @@ public class CreateListDialogFragment extends DialogFragment {
                 } else {
                     presenter.createList(editTextBox.getText().toString());
                     hideKeyboard(imm);
-                    dismiss();
                 }
             }
         });
