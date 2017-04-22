@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.rachelleignacio.listbucket.BuildConfig;
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
             moveTaskToBack(false);
         } else {
             showFabAddButton();
+            setTitle(getString(R.string.app_name));
             getSupportFragmentManager().popBackStack();
         }
     }

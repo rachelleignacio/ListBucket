@@ -17,6 +17,6 @@
             android:id="@+id/recycler_view_items">
         </android.support.v7.widget.RecyclerView>
         <include layout="@layout/add_list_item_layout"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

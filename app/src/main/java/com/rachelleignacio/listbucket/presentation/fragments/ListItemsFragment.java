@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +61,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         presenter = new ListItemsFragmentPresenterImpl(ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(), DbInteractor.getInstance(), this, parentList);
 
+        getActivity().setTitle(parentList.getName());
         initListItems();
         initAddListItemView();
     }
@@ -70,33 +71,28 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     }
 
     private void initAddListItemView() {
-        CardView addListItemView = (CardView) getActivity().findViewById(R.id.add_list_item_cardview);
+        LinearLayout addListItemView = (LinearLayout) getActivity().findViewById(R.id.add_list_item_linear_layout);
         final EditText addListItemTextbox = (EditText) getActivity().findViewById(R.id.add_list_item_edittext);
 
         addListItemView.setVisibility(View.VISIBLE);
-        addListItemView.findViewById(R.id.add_list_item_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (addListItemTextbox.getText().length() > 0) {
-                    presenter.addListItem(addListItemTextbox.getText().toString());
-                    addListItemTextbox.setText("");
-                } else {
-                    Toast.makeText(getActivity(), getString(R.string.add_list_item_error_toast_msg),
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         addListItemTextbox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-                    getView().findViewById(R.id.add_list_item_submit).callOnClick();
+                    if (addListItemTextbox.getText().length() > 0) {
+                        presenter.addListItem(addListItemTextbox.getText().toString());
+                        addListItemTextbox.setText("");
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.add_list_item_error_toast_msg),
+                                Toast.LENGTH_SHORT).show();
+                    }
                     handled = true;
                 }
                 return handled;
             }
         });
+        addListItemTextbox.requestFocus();
     }
 
     @Override
