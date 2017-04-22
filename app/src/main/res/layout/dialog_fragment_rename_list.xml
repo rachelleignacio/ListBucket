@@ -13,6 +13,6 @@
         android:hint="@string/rename_list_edittext_hint"
         android:background="@android:color/transparent"
         android:gravity="top"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:imeOptions="actionGo"/>
 </LinearLayout>
