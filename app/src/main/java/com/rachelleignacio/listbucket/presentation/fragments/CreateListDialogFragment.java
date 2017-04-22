@@ -1,8 +1,11 @@
 package com.rachelleignacio.listbucket.presentation.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.CreateListFragmentPresenterImpl;
+import com.rachelleignacio.listbucket.presentation.presenters.impl.RenameListFragmentPresenterImpl;
 
 /**
  * Created by rachelleignacio on 3/6/17.
@@ -41,25 +45,24 @@ public class CreateListDialogFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_fragment_create_list, container, false);
-    }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_create_list, null);
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (getDialog() != null) {
-            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-
-        editTextBox = (EditText) getView().findViewById(R.id.create_list_name_edittext);
+        editTextBox = (EditText) view.findViewById(R.id.create_list_edittext);
         presenter = new CreateListFragmentPresenterImpl(ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(), callback, DbInteractor.getInstance());
 
-        getView().findViewById(R.id.create_list_button).setOnClickListener(new View.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(view);
+        builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dismiss();
+            }
+        });
+        builder.setPositiveButton(getString(R.string.create_list_dialog_submit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
                 if (editTextBox.getText().length() == 0) {
                     Toast.makeText(getActivity(), getString(R.string.create_list_error_toast_msg),
                             Toast.LENGTH_SHORT).show();
@@ -69,16 +72,6 @@ public class CreateListDialogFragment extends DialogFragment {
                 }
             }
         });
-        editTextBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    getView().findViewById(R.id.create_list_button).callOnClick();
-                    handled = true;
-                }
-                return handled;
-            }
-        });
+        return builder.create();
     }
 }
