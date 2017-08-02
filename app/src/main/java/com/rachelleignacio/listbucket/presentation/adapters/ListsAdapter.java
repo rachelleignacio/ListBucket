@@ -13,6 +13,7 @@ import com.rachelleignacio.listbucket.presentation.activities.MainActivity;
 import com.rachelleignacio.listbucket.presentation.fragments.RenameListDialogFragment;
 import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.domain.models.List;
+import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter;
 
 import java.util.Collections;
 
@@ -23,12 +24,12 @@ import java.util.Collections;
 public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
         implements ListAdapterTouchListener {
 
-    private Context context;
     private java.util.List<List> lists;
+    private ListBucketFragmentPresenter.View view;
 
-    public ListsAdapter(Context context, java.util.List<List> lists) {
-        this.context = context;
+    public ListsAdapter(java.util.List<List> lists, ListBucketFragmentPresenter.View view) {
         this.lists = lists;
+        this.view = view;
     }
 
     @Override
@@ -45,13 +46,13 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
         holder.renameListIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) context).onClickRenameList(list);
+                ListsAdapter.this.view.onClickRenameList(list);
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) context).displayListItems(list);
+                ListsAdapter.this.view.onCLickList(list);
             }
         });
     }
@@ -64,7 +65,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
 
     @Override
     public void onRowDismiss(int position) {
-        ((MainActivity) context).onListSwipedToDelete(lists.get(position));
+        ListsAdapter.this.view.onListSwipedToDelete(position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

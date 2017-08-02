@@ -3,7 +3,6 @@ package com.rachelleignacio.listbucket.presentation.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -23,13 +22,10 @@ import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
-import com.rachelleignacio.listbucket.presentation.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl;
-
-import java.util.ArrayList;
 
 /**
  * Created by rachelleignacio on 3/4/17.
@@ -51,7 +47,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recycler_view_list, container, false);
+        return inflater.inflate(R.layout.fragment_list_items_layout, container, false);
     }
 
     @Override
@@ -74,7 +70,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         LinearLayout addListItemView = getActivity().findViewById(R.id.add_list_item_linear_layout);
         final EditText addListItemTextbox = getActivity().findViewById(R.id.add_list_item_edittext);
 
-        addListItemView.setVisibility(View.VISIBLE);
+//        addListItemView.setVisibility(View.VISIBLE);
         addListItemTextbox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {

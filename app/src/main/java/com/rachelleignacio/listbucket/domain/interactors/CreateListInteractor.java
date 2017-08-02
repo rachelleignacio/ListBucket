@@ -1,6 +1,7 @@
 package com.rachelleignacio.listbucket.domain.interactors;
 
 import com.rachelleignacio.listbucket.domain.interactors.base.Interactor;
+import com.rachelleignacio.listbucket.domain.models.List;
 
 /**
  * Created by rachelleignacio on 3/7/17.
@@ -8,6 +9,6 @@ import com.rachelleignacio.listbucket.domain.interactors.base.Interactor;
 
 public interface CreateListInteractor extends Interactor {
     interface Callback {
-        void onListCreated();
+        void onListCreated(List newList);
     }
 }

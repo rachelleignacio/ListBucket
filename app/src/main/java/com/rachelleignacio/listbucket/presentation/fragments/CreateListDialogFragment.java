@@ -25,7 +25,6 @@ import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.CreateListFragmentPresenterImpl;
-import com.rachelleignacio.listbucket.presentation.presenters.impl.RenameListFragmentPresenterImpl;
 
 /**
  * Created by rachelleignacio on 3/6/17.
@@ -51,7 +50,7 @@ public class CreateListDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_create_list, null);
 
-        editTextBox = (EditText) view.findViewById(R.id.create_list_edittext);
+        editTextBox = view.findViewById(R.id.create_list_edittext);
         editTextBox.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         showKeyboard(imm);

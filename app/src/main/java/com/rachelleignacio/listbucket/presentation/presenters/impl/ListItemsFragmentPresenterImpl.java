@@ -27,9 +27,9 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
         AddListItemInteractor.Callback, DeleteListItemInteractor.Callback {
 
     private DbInteractor dbInteractor;
+    private ListItemsFragmentPresenter.View view;
     private com.rachelleignacio.listbucket.domain.models.List parentList;
     private java.util.List<ListItem> listItems;
-    private ListItemsFragmentPresenter.View view;
 
     public ListItemsFragmentPresenterImpl(Executor executor, MainThread mainThread, DbInteractor db,
                                           View view, com.rachelleignacio.listbucket.domain.models.List parent) {

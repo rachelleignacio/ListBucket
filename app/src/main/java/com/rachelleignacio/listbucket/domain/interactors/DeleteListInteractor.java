@@ -8,6 +8,6 @@ import com.rachelleignacio.listbucket.domain.interactors.base.Interactor;
 
 public interface DeleteListInteractor extends Interactor {
     interface Callback {
-        void onListDeleted();
+        void onListDeleted(int adapterPosition);
     }
 }

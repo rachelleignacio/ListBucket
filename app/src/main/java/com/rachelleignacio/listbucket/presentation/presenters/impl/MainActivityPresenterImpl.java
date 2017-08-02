@@ -19,8 +19,7 @@ import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresen
  * Created by rachelleignacio on 3/31/17.
  */
 
-public class MainActivityPresenterImpl extends AbstractPresenter implements MainActivityPresenter,
-        CreateListInteractor.Callback, DeleteListInteractor.Callback, RenameListInteractor.Callback {
+public class MainActivityPresenterImpl extends AbstractPresenter implements MainActivityPresenter {
 
     private DbInteractor dbInteractor;
     private MainActivityPresenter.View view;
@@ -31,38 +30,38 @@ public class MainActivityPresenterImpl extends AbstractPresenter implements Main
         this.dbInteractor = database;
         this.view = view;
     }
-
-    @Override
-    public void showCreateListDialog(FragmentManager fragmentManager) {
-        CreateListDialogFragment.newInstance(this)
-                .show(fragmentManager, CreateListDialogFragment.TAG);
-    }
-
-    @Override
-    public void deleteListFromBucket(List listToDelete) {
-        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(executor,
-                mainThread, this, dbInteractor, listToDelete);
-        deleteListInteractor.execute();
-    }
-
-    @Override
-    public void showRenameListDialog(FragmentManager fragmentManager, List listToRename) {
-        RenameListDialogFragment.newInstance(this, listToRename)
-                .show(fragmentManager, RenameListDialogFragment.TAG);
-    }
-
-    @Override
-    public void onListCreated() {
-        view.showLists();
-    }
-
-    @Override
-    public void onListDeleted() {
-        view.showLists();
-    }
-
-    @Override
-    public void onListRenamed() {
-        view.showLists();
-    }
+//
+//    @Override
+//    public void showCreateListDialog(FragmentManager fragmentManager) {
+//        CreateListDialogFragment.newInstance(this)
+//                .show(fragmentManager, CreateListDialogFragment.TAG);
+//    }
+//
+//    @Override
+//    public void deleteListFromBucket(List listToDelete) {
+//        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(executor,
+//                mainThread, this, dbInteractor, listToDelete);
+//        deleteListInteractor.execute();
+//    }
+//
+//    @Override
+//    public void showRenameListDialog(FragmentManager fragmentManager, List listToRename) {
+//        RenameListDialogFragment.newInstance(this, listToRename)
+//                .show(fragmentManager, RenameListDialogFragment.TAG);
+//    }
+//
+//    @Override
+//    public void onListCreated() {
+//        view.showLists();
+//    }
+//
+//    @Override
+//    public void onListDeleted() {
+//        view.showLists();
+//    }
+//
+//    @Override
+//    public void onListRenamed() {
+//        view.showLists();
+//    }
 }

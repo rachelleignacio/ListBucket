@@ -2,6 +2,7 @@ package com.rachelleignacio.listbucket.presentation.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.presentation.activities.MainActivity;
 import com.rachelleignacio.listbucket.presentation.adapters.ListsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
@@ -30,6 +32,7 @@ public class MainListBucketFragment extends Fragment
 
     private ItemTouchHelper listTouchListener;
     private ListBucketFragmentPresenter presenter;
+    ListsAdapter listsAdapter;
 
     @SuppressLint("ValidFragment")
     private MainListBucketFragment() {}
@@ -40,7 +43,7 @@ public class MainListBucketFragment extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recycler_view_list, container, false);
+        return inflater.inflate(R.layout.fragment_list_bucket_layout, container, false);
     }
 
     @Override
@@ -49,7 +52,7 @@ public class MainListBucketFragment extends Fragment
 
         presenter = new ListBucketFragmentPresenterImpl(ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(), DbInteractor.getInstance(), this);
-
+        showFabAddButton();
         initLists();
     }
 
@@ -59,11 +62,12 @@ public class MainListBucketFragment extends Fragment
 
     @Override
     public void showLists(java.util.List<List> lists) {
-        RecyclerView listsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
+        RecyclerView listsRecyclerView = getActivity().findViewById(R.id.recycler_view_items);
         listsRecyclerView.setHasFixedSize(true);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listsRecyclerView.setAdapter(null);
 
-        ListsAdapter listsAdapter = new ListsAdapter(getActivity(), lists);
+        listsAdapter = new ListsAdapter(lists, this);
         listsRecyclerView.setAdapter(listsAdapter);
 
         ItemTouchHelper.Callback listTouchCallback = new ListTouchListenerCallback(listsAdapter);
@@ -72,7 +76,41 @@ public class MainListBucketFragment extends Fragment
     }
 
     @Override
+    public void onCLickList(List listToView) {
+        ((MainActivity) getActivity()).displayListItems(listToView);
+    }
+
+    @Override
+    public void onClickCreateList() {
+        presenter.showCreateListDialog(getActivity().getSupportFragmentManager());
+    }
+
+    @Override
+    public void onListSwipedToDelete(int position) {
+        presenter.deleteListFromBucket(position);
+        listsAdapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onClickRenameList(List listToRename) {
+        presenter.showRenameListDialog(getActivity().getSupportFragmentManager(), listToRename);
+    }
+
+    @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
         listTouchListener.startDrag(viewHolder);
+    }
+
+    private void showFabAddButton() {
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onClickCreateList();
+                }
+            });
+        }
     }
 }

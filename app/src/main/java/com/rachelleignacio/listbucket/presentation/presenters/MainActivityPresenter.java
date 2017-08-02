@@ -11,13 +11,15 @@ import com.rachelleignacio.listbucket.domain.models.List;
 public interface MainActivityPresenter {
 
     interface View {
-        void showLists();
-        void onClickCreateList();
-        void onListSwipedToDelete(List listToDelete);
-        void onClickRenameList(List listToRename);
+        void showListBucket();
+        void showList(List list);
+//        void showLists();
+//        void onClickCreateList();
+//        void onListSwipedToDelete(List listToDelete);
+//        void onClickRenameList(List listToRename);
     }
 
-    void showCreateListDialog(FragmentManager fragmentManager);
-    void deleteListFromBucket(List listToDelete);
-    void showRenameListDialog(FragmentManager fragmentManager, List listToRename);
+//    void showCreateListDialog(FragmentManager fragmentManager);
+//    void deleteListFromBucket(List listToDelete);
+//    void showRenameListDialog(FragmentManager fragmentManager, List listToRename);
 }

@@ -5,6 +5,7 @@ import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.impl.CreateListInteractorImpl;
+import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.presentation.presenters.AbstractPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragmentPresenter;
 
@@ -25,8 +26,9 @@ public class CreateListFragmentPresenterImpl extends AbstractPresenter implement
 
     @Override
     public void createList(String listName) {
+        List listToSave = new List(listName);
         CreateListInteractor createListInteractor = new CreateListInteractorImpl(executor,
-                mainThread, callback, dbInteractor, listName);
+                mainThread, callback, dbInteractor, listToSave);
         createListInteractor.execute();
     }
 }
