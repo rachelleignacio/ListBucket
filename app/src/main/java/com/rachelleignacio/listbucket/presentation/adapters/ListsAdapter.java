@@ -61,19 +61,6 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
         return lists.size();
     }
 
-    @Override
-    public void onRowDrag(int fromPosition, int toPosition) {
-        if (fromPosition < toPosition) {
-            for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(lists, i, i+1);
-            }
-        } else {
-            for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(lists, i, i-1);
-            }
-        }
-        notifyItemMoved(fromPosition, toPosition);
-    }
 
     @Override
     public void onRowDismiss(int position) {
@@ -86,8 +73,8 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
 
         ViewHolder(View itemView) {
             super(itemView);
-            listNameTv = (TextView) itemView.findViewById(R.id.list_name);
-            renameListIv = (ImageView) itemView.findViewById(R.id.rename_list);
+            listNameTv = itemView.findViewById(R.id.list_name);
+            renameListIv = itemView.findViewById(R.id.rename_list);
         }
     }
 }

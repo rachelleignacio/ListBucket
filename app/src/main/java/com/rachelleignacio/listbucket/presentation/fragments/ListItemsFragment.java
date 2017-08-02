@@ -33,11 +33,8 @@ import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFrag
  * Created by rachelleignacio on 3/4/17.
  */
 
-public class ListItemsFragment extends Fragment implements ListItemsFragmentPresenter.View,
-        OnStartDragListener {
-
+public class ListItemsFragment extends Fragment implements ListItemsFragmentPresenter.View {
     private List parentList;
-    private ItemTouchHelper itemTouchListener;
     private ListItemsFragmentPresenter presenter;
 
     @SuppressLint("ValidFragment")
@@ -71,8 +68,8 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     }
 
     private void initAddListItemView() {
-        LinearLayout addListItemView = (LinearLayout) getActivity().findViewById(R.id.add_list_item_linear_layout);
-        final EditText addListItemTextbox = (EditText) getActivity().findViewById(R.id.add_list_item_edittext);
+        LinearLayout addListItemView = getActivity().findViewById(R.id.add_list_item_linear_layout);
+        final EditText addListItemTextbox = getActivity().findViewById(R.id.add_list_item_edittext);
 
         addListItemView.setVisibility(View.VISIBLE);
         addListItemTextbox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -97,7 +94,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
 
     @Override
     public void showListItems(java.util.List<ListItem> items) {
-        RecyclerView itemsRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view_items);
+        RecyclerView itemsRecyclerView = getActivity().findViewById(R.id.recycler_view_items);
         itemsRecyclerView.setHasFixedSize(true);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -105,7 +102,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         itemsRecyclerView.setAdapter(itemsAdapter);
 
         ItemTouchHelper.Callback itemTouchCallback = new ListTouchListenerCallback(itemsAdapter);
-        itemTouchListener = new ItemTouchHelper(itemTouchCallback);
+        ItemTouchHelper itemTouchListener = new ItemTouchHelper(itemTouchCallback);
         itemTouchListener.attachToRecyclerView(itemsRecyclerView);
     }
 
@@ -117,10 +114,5 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     public void refreshFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-    }
-
-    @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        itemTouchListener.startDrag(viewHolder);
     }
 }

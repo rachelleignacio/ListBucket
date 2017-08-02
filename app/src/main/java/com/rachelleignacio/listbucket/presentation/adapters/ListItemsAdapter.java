@@ -11,8 +11,6 @@ import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchLis
 import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 
-import java.util.Collections;
-
 /**
  * Created by rachelleignacio on 3/4/17.
  */
@@ -45,19 +43,6 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
         return listItems.size();
     }
 
-    @Override
-    public void onRowDrag(int fromPosition, int toPosition) {
-        if (fromPosition < toPosition) {
-            for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(listItems, i, i+1);
-            }
-        } else {
-            for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(listItems, i, i-1);
-            }
-        }
-        notifyItemMoved(fromPosition, toPosition);
-    }
 
     @Override
     public void onRowDismiss(int position) {
@@ -69,7 +54,7 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            listItemNameTv = (TextView) itemView.findViewById(R.id.item_name);
+            listItemNameTv = itemView.findViewById(R.id.item_name);
         }
     }
 }

@@ -5,6 +5,5 @@ package com.rachelleignacio.listbucket.presentation.listeners;
  */
 
 public interface ListAdapterTouchListener {
-    void onRowDrag(int fromPosition, int toPosition);
     void onRowDismiss(int position);
 }
