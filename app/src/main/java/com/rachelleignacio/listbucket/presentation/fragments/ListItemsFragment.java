@@ -29,13 +29,16 @@ import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl;
 
+import java.util.ArrayList;
+
 /**
  * Created by rachelleignacio on 3/4/17.
  */
 
 public class ListItemsFragment extends Fragment implements ListItemsFragmentPresenter.View {
-    private List parentList;
     private ListItemsFragmentPresenter presenter;
+    private List parentList;
+    private ListItemsAdapter itemsAdapter;
 
     @SuppressLint("ValidFragment")
     private ListItemsFragment() {}
@@ -79,6 +82,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
                 if (actionId == EditorInfo.IME_ACTION_GO) {
                     if (addListItemTextbox.getText().length() > 0) {
                         presenter.addListItem(addListItemTextbox.getText().toString());
+                        itemsAdapter.notifyItemInserted(presenter.getListCount());
                         addListItemTextbox.setText("");
                     } else {
                         Toast.makeText(getActivity(), getString(R.string.add_list_item_error_toast_msg),
@@ -97,8 +101,9 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         RecyclerView itemsRecyclerView = getActivity().findViewById(R.id.recycler_view_items);
         itemsRecyclerView.setHasFixedSize(true);
         itemsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        itemsRecyclerView.setAdapter(null);
 
-        ListItemsAdapter itemsAdapter = new ListItemsAdapter(items, this);
+        itemsAdapter = new ListItemsAdapter(items, this);
         itemsRecyclerView.setAdapter(itemsAdapter);
 
         ItemTouchHelper.Callback itemTouchCallback = new ListTouchListenerCallback(itemsAdapter);
@@ -107,12 +112,8 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     }
 
     @Override
-    public void onItemSwipedToDelete(ListItem item) {
-        presenter.deleteListItem(item);
-    }
-
-    public void refreshFragment() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
+    public void onItemSwipedToDelete(int position) {
+        presenter.deleteListItem(position);
+        itemsAdapter.notifyItemRemoved(position);
     }
 }

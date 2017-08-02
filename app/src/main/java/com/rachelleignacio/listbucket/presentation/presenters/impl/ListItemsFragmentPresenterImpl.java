@@ -10,10 +10,12 @@ import com.rachelleignacio.listbucket.domain.interactors.impl.AddListItemInterac
 import com.rachelleignacio.listbucket.domain.interactors.impl.DeleteListItemInteractorImpl;
 import com.rachelleignacio.listbucket.domain.interactors.impl.GetAllListItemsInteractorImpl;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
+import com.rachelleignacio.listbucket.presentation.adapters.ListItemsAdapter;
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.presentation.presenters.AbstractPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +28,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
 
     private DbInteractor dbInteractor;
     private com.rachelleignacio.listbucket.domain.models.List parentList;
+    private java.util.List<ListItem> listItems;
     private ListItemsFragmentPresenter.View view;
 
     public ListItemsFragmentPresenterImpl(Executor executor, MainThread mainThread, DbInteractor db,
@@ -45,30 +48,40 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
 
     @Override
     public void onListItemsRetrieved(List<ListItem> items) {
-        view.showListItems(items);
+        listItems = new ArrayList<>();
+        listItems.addAll(items);
+        view.showListItems(listItems);
     }
 
     @Override
     public void addListItem(String listItemName) {
+        ListItem itemToSave = new ListItem(parentList, listItemName);
         AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(executor, mainThread,
-                this, dbInteractor, parentList, listItemName);
+                this, dbInteractor, parentList, itemToSave);
         addItemInteractor.execute();
     }
 
     @Override
-    public void onListItemAdded() {
-        ((ListItemsFragment) view).refreshFragment();
+    public void onListItemAdded(ListItem newItem) {
+        listItems.add(newItem);
+        view.showListItems(listItems);
     }
 
     @Override
-    public void deleteListItem(ListItem item) {
-        DeleteListItemInteractor deleteListItemInteractor =
-                new DeleteListItemInteractorImpl(executor, mainThread, this, dbInteractor, item);
+    public void deleteListItem(int position) {
+        DeleteListItemInteractor deleteListItemInteractor = new DeleteListItemInteractorImpl(executor,
+                mainThread, this, dbInteractor, listItems.get(position), position);
         deleteListItemInteractor.execute();
     }
 
     @Override
-    public void onListItemDeleted() {
-        ((ListItemsFragment) view).refreshFragment();
+    public void onListItemDeleted(int position) {
+        listItems.remove(position);
+        view.showListItems(listItems);
+    }
+
+    @Override
+    public int getListCount() {
+        return listItems.size();
     }
 }

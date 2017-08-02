@@ -46,7 +46,7 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
 
     @Override
     public void onRowDismiss(int position) {
-        view.onItemSwipedToDelete(listItems.get(position));
+        view.onItemSwipedToDelete(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

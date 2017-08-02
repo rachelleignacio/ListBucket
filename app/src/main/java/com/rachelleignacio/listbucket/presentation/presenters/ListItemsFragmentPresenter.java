@@ -9,10 +9,11 @@ import com.rachelleignacio.listbucket.domain.models.ListItem;
 public interface ListItemsFragmentPresenter {
     interface View {
         void showListItems(java.util.List<ListItem> items);
-        void onItemSwipedToDelete(ListItem item);
+        void onItemSwipedToDelete(int position);
     }
 
     void getListItems();
+    int getListCount();
     void addListItem(String listItemName);
-    void deleteListItem(ListItem item);
+    void deleteListItem(int position);
 }

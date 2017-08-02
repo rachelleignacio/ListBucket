@@ -1,6 +1,7 @@
 package com.rachelleignacio.listbucket.domain.interactors;
 
 import com.rachelleignacio.listbucket.domain.interactors.base.Interactor;
+import com.rachelleignacio.listbucket.domain.models.ListItem;
 
 /**
  * Created by rachelleignacio on 3/9/17.
@@ -8,6 +9,6 @@ import com.rachelleignacio.listbucket.domain.interactors.base.Interactor;
 
 public interface AddListItemInteractor extends Interactor {
     interface  Callback {
-        void onListItemAdded();
+        void onListItemAdded(ListItem newItem);
     }
 }

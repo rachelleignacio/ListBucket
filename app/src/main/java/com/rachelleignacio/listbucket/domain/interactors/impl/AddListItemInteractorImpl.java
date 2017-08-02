@@ -16,25 +16,24 @@ public class AddListItemInteractorImpl extends AbstractInteractor implements Add
     private AddListItemInteractor.Callback callback;
     private DbInteractor database;
     private List parentList;
-    private String itemName;
+    private ListItem newItem;
 
     public AddListItemInteractorImpl(Executor threadExecutor, MainThread mainThread,
-                                     Callback callback, DbInteractor db, List parent, String name) {
+                                     Callback callback, DbInteractor db, List parent, ListItem newItem) {
         super(threadExecutor, mainThread);
         this.callback = callback;
         this.database = db;
         this.parentList = parent;
-        this.itemName = name;
+        this.newItem = newItem;
     }
 
     @Override
     public void run() {
-        ListItem itemToSave = new ListItem(parentList, itemName);
-        database.saveListItem(itemToSave);
+        database.saveListItem(newItem);
         mainThread.post(new Runnable() {
             @Override
             public void run() {
-                callback.onListItemAdded();
+                callback.onListItemAdded(newItem);
             }
         });
     }
