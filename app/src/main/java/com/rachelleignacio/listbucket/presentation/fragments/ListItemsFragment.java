@@ -67,10 +67,8 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     }
 
     private void initAddListItemView() {
-        LinearLayout addListItemView = getActivity().findViewById(R.id.add_list_item_linear_layout);
         final EditText addListItemTextbox = getActivity().findViewById(R.id.add_list_item_edittext);
 
-//        addListItemView.setVisibility(View.VISIBLE);
         addListItemTextbox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {

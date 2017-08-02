@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     }
 
     private void displayLists() {
-//        showFabAddButton();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, MainListBucketFragment.newInstance())
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     }
 
     public void displayListItems(List listToDisplay) {
-//        hideFabAddButton();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, ListItemsFragment.newInstance(listToDisplay))
@@ -64,37 +62,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
     public void showList(List list) {
         displayListItems(list);
     }
-//
-//    @Override
-//    public void onClickCreateList() {
-//        mainActivityPresenter.showCreateListDialog(getSupportFragmentManager());
-//    }
-//
-//    @Override
-//    public void onListSwipedToDelete(List listToDelete) {
-//        mainActivityPresenter.deleteListFromBucket(listToDelete);
-//    }
-//
-//    @Override
-//    public void onClickRenameList(List listToRename) {
-//        mainActivityPresenter.showRenameListDialog(getSupportFragmentManager(), listToRename);
-//    }
-
-
-//    private void showFabAddButton() {
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setVisibility(View.VISIBLE);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onClickCreateList();
-//            }
-//        });
-//    }
-//
-//    private void hideFabAddButton() {
-//        findViewById(R.id.fab).setVisibility(View.GONE);
-//    }
 
     @Override
     public void onBackPressed() {
@@ -102,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         if (count == 1) {
             moveTaskToBack(false);
         } else {
-//            showFabAddButton();
             setTitle(getString(R.string.app_name));
             getSupportFragmentManager().popBackStack();
         }

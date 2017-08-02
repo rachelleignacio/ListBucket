@@ -77,7 +77,7 @@ public class MainListBucketFragment extends Fragment
 
     @Override
     public void onCLickList(List listToView) {
-        ((MainActivity) getActivity()).displayListItems(listToView);
+        ((MainActivity) getActivity()).showList(listToView);
     }
 
     @Override
