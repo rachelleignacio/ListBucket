@@ -1,2 +1,2 @@
 # ListBucket
-A simple list app implemented using the clean architecture design pattern.
+A simple list app implemented using MVP + clean architecture.
