@@ -33,11 +33,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
                 MainThreadImpl.getInstance(), DbInteractor.getInstance(), this);
 
         if (savedInstanceState == null) {
-            displayLists();
+            showListBucket();
         }
     }
 
-    private void displayLists() {
+    @Override
+    public void showListBucket() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, MainListBucketFragment.newInstance())
@@ -45,22 +46,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
                 .commit();
     }
 
-    public void displayListItems(List listToDisplay) {
+    @Override
+    public void showList(List listToDisplay) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, ListItemsFragment.newInstance(listToDisplay))
                 .addToBackStack("MainActivityFragmentStack")
                 .commit();
-    }
-
-    @Override
-    public void showListBucket() {
-        displayLists();
-    }
-
-    @Override
-    public void showList(List list) {
-        displayListItems(list);
     }
 
     @Override
