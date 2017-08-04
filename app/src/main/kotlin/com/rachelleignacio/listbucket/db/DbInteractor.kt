@@ -3,9 +3,11 @@ package com.rachelleignacio.listbucket.db
 import com.rachelleignacio.listbucket.domain.models.List
 import com.rachelleignacio.listbucket.domain.models.ListItem
 import com.rachelleignacio.listbucket.domain.models.ListItem_Table
-import com.raizlabs.android.dbflow.config.FlowManager
+import com.raizlabs.android.dbflow.kotlinextensions.delete
+import com.raizlabs.android.dbflow.kotlinextensions.processInTransactionAsync
+import com.raizlabs.android.dbflow.kotlinextensions.save
+import com.raizlabs.android.dbflow.kotlinextensions.update
 import com.raizlabs.android.dbflow.sql.language.Select
-import com.raizlabs.android.dbflow.structure.database.transaction.ProcessModelTransaction
 
 /**
  * Created by rachelleignacio on 8/4/17.
@@ -43,15 +45,10 @@ object  DbInteractor {
     fun deleteList(list: List) {
         val deleteListItems = Select()
                 .from(ListItem::class.java)
-                .where(ListItem_Table.parentList_id.eq(list.getId()))
+                .where(ListItem_Table.parentList_id.eq(list.id))
                 .queryList()
-        FlowManager.getDatabase(DbFlowDatabase::class.java)
-                .beginTransactionAsync(ProcessModelTransaction.Builder<ListItem>(
-                        ProcessModelTransaction.ProcessModel<ListItem> { item, _ -> item.delete() })
-                        .addAll(deleteListItems)
-                        .build())
-                .build()
-                .execute()
+
+        deleteListItems.processInTransactionAsync({ it, _ -> it.delete() })
         list.delete()
     }
 
@@ -60,7 +57,7 @@ object  DbInteractor {
     }
 
     fun renameList(list: List, newName: String) {
-        list.setName(newName)
+        list.name = newName
         list.update()
     }
 }
