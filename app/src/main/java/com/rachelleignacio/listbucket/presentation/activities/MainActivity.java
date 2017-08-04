@@ -1,21 +1,18 @@
 package com.rachelleignacio.listbucket.presentation.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.rachelleignacio.listbucket.BuildConfig;
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment;
-import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.MainActivityPresenterImpl;
 
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         setSupportActionBar(toolbar);
 
         mainActivityPresenter = new MainActivityPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), DbInteractor.getInstance(), this);
+                MainThreadImpl.getInstance(), DbInteractor.INSTANCE, this);
 
         if (savedInstanceState == null) {
             showListBucket();

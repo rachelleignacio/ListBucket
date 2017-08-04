@@ -1,6 +1,5 @@
 package com.rachelleignacio.listbucket.presentation.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rachelleignacio.listbucket.R;
-import com.rachelleignacio.listbucket.presentation.activities.MainActivity;
-import com.rachelleignacio.listbucket.presentation.fragments.RenameListDialogFragment;
-import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.domain.models.List;
+import com.rachelleignacio.listbucket.presentation.listeners.ListAdapterTouchListener;
 import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter;
-
-import java.util.Collections;
 
 /**
  * Created by rachelleignacio on 3/1/17.

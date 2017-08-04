@@ -10,8 +10,6 @@ import com.rachelleignacio.listbucket.domain.interactors.impl.AddListItemInterac
 import com.rachelleignacio.listbucket.domain.interactors.impl.DeleteListItemInteractorImpl;
 import com.rachelleignacio.listbucket.domain.interactors.impl.GetAllListItemsInteractorImpl;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
-import com.rachelleignacio.listbucket.presentation.adapters.ListItemsAdapter;
-import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.presentation.presenters.AbstractPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 

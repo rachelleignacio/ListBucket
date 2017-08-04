@@ -12,18 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rachelleignacio.listbucket.R;
+import com.rachelleignacio.listbucket.domain.models.List;
+import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.adapters.ListItemsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
-import com.rachelleignacio.listbucket.domain.models.List;
-import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl;
 
@@ -55,7 +54,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new ListItemsFragmentPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), DbInteractor.getInstance(), this, parentList);
+                MainThreadImpl.getInstance(), DbInteractor.INSTANCE, this, parentList);
 
         getActivity().setTitle(parentList.getName());
         initListItems();

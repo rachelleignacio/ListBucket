@@ -1,7 +1,5 @@
 package com.rachelleignacio.listbucket.presentation.presenters;
 
-import android.support.v4.app.FragmentManager;
-
 import com.rachelleignacio.listbucket.domain.models.List;
 
 /**

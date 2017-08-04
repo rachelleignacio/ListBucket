@@ -67,7 +67,7 @@ public class CreateListDialogFragment extends DialogFragment {
         });
 
         presenter = new CreateListFragmentPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), callback, DbInteractor.getInstance());
+                MainThreadImpl.getInstance(), callback, DbInteractor.INSTANCE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
