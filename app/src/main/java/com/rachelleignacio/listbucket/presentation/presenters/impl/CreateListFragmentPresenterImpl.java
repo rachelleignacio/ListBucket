@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.presentation.presenters.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.impl.CreateListInteractorImpl;
 import com.rachelleignacio.listbucket.domain.models.List;
@@ -17,9 +17,9 @@ public class CreateListFragmentPresenterImpl extends AbstractPresenter implement
     private CreateListInteractor.Callback callback;
     private DbInteractor dbInteractor;
 
-    public CreateListFragmentPresenterImpl(Executor executor, MainThread mainThread,
+    public CreateListFragmentPresenterImpl(ThreadExecutor threadExecutor, MainThread mainThread,
                                            CreateListInteractor.Callback callback, DbInteractor db) {
-        super(executor, mainThread);
+        super(threadExecutor, mainThread);
         this.callback = callback;
         this.dbInteractor = db;
     }
@@ -27,7 +27,7 @@ public class CreateListFragmentPresenterImpl extends AbstractPresenter implement
     @Override
     public void createList(String listName) {
         List listToSave = new List(listName);
-        CreateListInteractor createListInteractor = new CreateListInteractorImpl(executor,
+        CreateListInteractor createListInteractor = new CreateListInteractorImpl(threadExecutor,
                 mainThread, callback, dbInteractor, listToSave);
         createListInteractor.execute();
     }

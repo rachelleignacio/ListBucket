@@ -21,7 +21,7 @@ import com.rachelleignacio.listbucket.domain.models.ListItem;
 import com.rachelleignacio.listbucket.presentation.adapters.ListItemsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl;
@@ -53,8 +53,8 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new ListItemsFragmentPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), DbInteractor.INSTANCE, this, parentList);
+        presenter = new ListItemsFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
+                MainThreadImpl.Companion.getInstance(), DbInteractor.INSTANCE, this, parentList);
 
         getActivity().setTitle(parentList.getName());
         initListItems();

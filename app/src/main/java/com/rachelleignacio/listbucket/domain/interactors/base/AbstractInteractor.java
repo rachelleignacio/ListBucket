@@ -1,7 +1,7 @@
 package com.rachelleignacio.listbucket.domain.interactors.base;
 
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 
 /**
  * Created by rachelleignacio on 3/6/17.
@@ -10,13 +10,13 @@ import com.rachelleignacio.listbucket.domain.executor.MainThread;
  */
 
 public abstract class AbstractInteractor implements Interactor {
-    protected Executor threadExecutor;
+    protected ThreadExecutor threadExecutor;
     protected MainThread mainThread;
 
     protected volatile boolean isCanceled;
     protected volatile boolean isRunning;
 
-    public AbstractInteractor(Executor threadExecutor, MainThread mainThread) {
+    public AbstractInteractor(ThreadExecutor threadExecutor, MainThread mainThread) {
         this.threadExecutor = threadExecutor;
         this.mainThread = mainThread;
     }

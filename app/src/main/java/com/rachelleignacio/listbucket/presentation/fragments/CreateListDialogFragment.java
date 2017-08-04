@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -21,7 +18,7 @@ import android.widget.Toast;
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.CreateListFragmentPresenterImpl;
@@ -66,8 +63,8 @@ public class CreateListDialogFragment extends DialogFragment {
             }
         });
 
-        presenter = new CreateListFragmentPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), callback, DbInteractor.INSTANCE);
+        presenter = new CreateListFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
+                MainThreadImpl.Companion.getInstance(), callback, DbInteractor.INSTANCE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);

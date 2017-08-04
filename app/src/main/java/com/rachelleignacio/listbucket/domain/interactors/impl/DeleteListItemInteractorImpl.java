@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.domain.interactors.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.base.AbstractInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.DeleteListItemInteractor;
 import com.rachelleignacio.listbucket.domain.models.ListItem;
@@ -17,7 +17,7 @@ public class DeleteListItemInteractorImpl extends AbstractInteractor implements 
     private ListItem itemToDelete;
     private int listAdapterPosition;
 
-    public DeleteListItemInteractorImpl(Executor threadExecutor, MainThread mainThread,
+    public DeleteListItemInteractorImpl(ThreadExecutor threadExecutor, MainThread mainThread,
                                         Callback callback, DbInteractor db, ListItem item, int position) {
         super(threadExecutor, mainThread);
         this.callback = callback;

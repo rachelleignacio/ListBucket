@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.presentation.presenters.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.AddListItemInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.DeleteListItemInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.GetAllListItemsInteractor;
@@ -29,9 +29,9 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
     private com.rachelleignacio.listbucket.domain.models.List parentList;
     private java.util.List<ListItem> listItems;
 
-    public ListItemsFragmentPresenterImpl(Executor executor, MainThread mainThread, DbInteractor db,
+    public ListItemsFragmentPresenterImpl(ThreadExecutor threadExecutor, MainThread mainThread, DbInteractor db,
                                           View view, com.rachelleignacio.listbucket.domain.models.List parent) {
-        super(executor, mainThread);
+        super(threadExecutor, mainThread);
         this.dbInteractor = db;
         this.view = view;
         this.parentList = parent;
@@ -39,7 +39,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
 
     @Override
     public void getListItems() {
-        GetAllListItemsInteractor getItemsInteractor = new GetAllListItemsInteractorImpl(executor,
+        GetAllListItemsInteractor getItemsInteractor = new GetAllListItemsInteractorImpl(threadExecutor,
                 mainThread, this, dbInteractor, parentList.getId());
         getItemsInteractor.execute();
     }
@@ -54,7 +54,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
     @Override
     public void addListItem(String listItemName) {
         ListItem itemToSave = new ListItem(parentList, listItemName);
-        AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(executor, mainThread,
+        AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(threadExecutor, mainThread,
                 this, dbInteractor, parentList, itemToSave);
         addItemInteractor.execute();
     }
@@ -67,7 +67,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
 
     @Override
     public void deleteListItem(int position) {
-        DeleteListItemInteractor deleteListItemInteractor = new DeleteListItemInteractorImpl(executor,
+        DeleteListItemInteractor deleteListItemInteractor = new DeleteListItemInteractorImpl(threadExecutor,
                 mainThread, this, dbInteractor, listItems.get(position), position);
         deleteListItemInteractor.execute();
     }

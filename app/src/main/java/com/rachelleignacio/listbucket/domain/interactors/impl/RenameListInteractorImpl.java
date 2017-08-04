@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.domain.interactors.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.base.AbstractInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.RenameListInteractor;
 import com.rachelleignacio.listbucket.domain.models.List;
@@ -17,7 +17,7 @@ public class RenameListInteractorImpl extends AbstractInteractor implements Rena
     private List listToRename;
     private String newListName;
 
-    public RenameListInteractorImpl(Executor threadExecutor, MainThread mainThread, Callback callback,
+    public RenameListInteractorImpl(ThreadExecutor threadExecutor, MainThread mainThread, Callback callback,
                                     DbInteractor db, List listToRename, String newName) {
         super(threadExecutor, mainThread);
         this.callback = callback;

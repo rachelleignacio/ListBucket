@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment;
 import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment;
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mainActivityPresenter = new MainActivityPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), DbInteractor.INSTANCE, this);
+        mainActivityPresenter = new MainActivityPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
+                MainThreadImpl.Companion.getInstance(), DbInteractor.INSTANCE, this);
 
         if (savedInstanceState == null) {
             showListBucket();

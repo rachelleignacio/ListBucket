@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.domain.interactors.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.base.AbstractInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.AddListItemInteractor;
 import com.rachelleignacio.listbucket.domain.models.List;
@@ -18,7 +18,7 @@ public class AddListItemInteractorImpl extends AbstractInteractor implements Add
     private List parentList;
     private ListItem newItem;
 
-    public AddListItemInteractorImpl(Executor threadExecutor, MainThread mainThread,
+    public AddListItemInteractorImpl(ThreadExecutor threadExecutor, MainThread mainThread,
                                      Callback callback, DbInteractor db, List parent, ListItem newItem) {
         super(threadExecutor, mainThread);
         this.callback = callback;

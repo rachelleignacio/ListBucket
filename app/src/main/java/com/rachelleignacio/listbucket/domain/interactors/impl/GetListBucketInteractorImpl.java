@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.domain.interactors.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.base.AbstractInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.GetListBucketInteractor;
 
@@ -14,7 +14,7 @@ public class GetListBucketInteractorImpl extends AbstractInteractor implements G
     private GetListBucketInteractor.Callback callback;
     private DbInteractor database;
 
-    public GetListBucketInteractorImpl(Executor threadExecutor, MainThread mainThread,
+    public GetListBucketInteractorImpl(ThreadExecutor threadExecutor, MainThread mainThread,
                                        Callback callback, DbInteractor db) {
         super(threadExecutor, mainThread);
         this.callback = callback;

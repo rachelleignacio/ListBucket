@@ -3,8 +3,8 @@ package com.rachelleignacio.listbucket.presentation.presenters.impl;
 import android.support.v4.app.FragmentManager;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.DeleteListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.GetListBucketInteractor;
@@ -31,16 +31,16 @@ public class ListBucketFragmentPresenterImpl extends AbstractPresenter implement
     private ListBucketFragmentPresenter.View view;
     private java.util.List<List> lists;
 
-    public ListBucketFragmentPresenterImpl(Executor executor, MainThread mainThread,
+    public ListBucketFragmentPresenterImpl(ThreadExecutor threadExecutor, MainThread mainThread,
                                            DbInteractor db, View view) {
-        super(executor, mainThread);
+        super(threadExecutor, mainThread);
         this.dbInteractor = db;
         this.view = view;
     }
 
     @Override
     public void getLists() {
-        GetListBucketInteractor getListsInterator = new GetListBucketInteractorImpl(executor,
+        GetListBucketInteractor getListsInterator = new GetListBucketInteractorImpl(threadExecutor,
                 mainThread, this, dbInteractor);
         getListsInterator.execute();
     }
@@ -66,7 +66,7 @@ public class ListBucketFragmentPresenterImpl extends AbstractPresenter implement
 
     @Override
     public void deleteListFromBucket(int position) {
-        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(executor,
+        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(threadExecutor,
                 mainThread, this, dbInteractor, lists.get(position), position);
         deleteListInteractor.execute();
     }

@@ -17,7 +17,7 @@ import com.rachelleignacio.listbucket.presentation.activities.MainActivity;
 import com.rachelleignacio.listbucket.presentation.adapters.ListsAdapter;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.presentation.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter;
@@ -50,8 +50,8 @@ public class MainListBucketFragment extends Fragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new ListBucketFragmentPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), DbInteractor.INSTANCE, this);
+        presenter = new ListBucketFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
+                MainThreadImpl.Companion.getInstance(), DbInteractor.INSTANCE, this);
         showFabAddButton();
         initLists();
     }

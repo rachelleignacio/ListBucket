@@ -1,18 +1,18 @@
 package com.rachelleignacio.listbucket.presentation.presenters;
 
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 
 /**
  * Created by rachelleignacio on 3/31/17.
  */
 
 public abstract class AbstractPresenter {
-    protected Executor executor;
+    protected ThreadExecutor threadExecutor;
     protected MainThread mainThread;
 
-    public AbstractPresenter(Executor executor, MainThread mainThread) {
-        this.executor = executor;
+    public AbstractPresenter(ThreadExecutor threadExecutor, MainThread mainThread) {
+        this.threadExecutor = threadExecutor;
         this.mainThread = mainThread;
     }
 }

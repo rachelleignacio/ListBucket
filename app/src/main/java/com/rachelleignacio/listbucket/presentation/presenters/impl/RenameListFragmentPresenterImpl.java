@@ -1,8 +1,8 @@
 package com.rachelleignacio.listbucket.presentation.presenters.impl;
 
 import com.rachelleignacio.listbucket.db.DbInteractor;
-import com.rachelleignacio.listbucket.domain.executor.Executor;
 import com.rachelleignacio.listbucket.domain.executor.MainThread;
+import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor;
 import com.rachelleignacio.listbucket.domain.interactors.RenameListInteractor;
 import com.rachelleignacio.listbucket.domain.interactors.impl.RenameListInteractorImpl;
 import com.rachelleignacio.listbucket.domain.models.List;
@@ -19,16 +19,16 @@ public class RenameListFragmentPresenterImpl extends AbstractPresenter
     private RenameListInteractor.Callback callback;
     private DbInteractor dbInteractor;
 
-    public RenameListFragmentPresenterImpl(Executor executor, MainThread mainThread,
+    public RenameListFragmentPresenterImpl(ThreadExecutor threadExecutor, MainThread mainThread,
                                            RenameListInteractor.Callback callback, DbInteractor db) {
-        super(executor, mainThread);
+        super(threadExecutor, mainThread);
         this.callback = callback;
         this.dbInteractor = db;
     }
 
     @Override
     public void renameList(List listToRename, String newListName) {
-        RenameListInteractor renameListInteractor = new RenameListInteractorImpl(executor, mainThread,
+        RenameListInteractor renameListInteractor = new RenameListInteractorImpl(threadExecutor, mainThread,
                 callback, dbInteractor, listToRename, newListName);
         renameListInteractor.execute();
     }

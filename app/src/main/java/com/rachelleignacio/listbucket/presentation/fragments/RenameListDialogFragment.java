@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.rachelleignacio.listbucket.R;
 import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
-import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutor;
+import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.domain.interactors.RenameListInteractor;
 import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.presentation.presenters.RenameListFragmentPresenter;
@@ -67,8 +67,8 @@ public class RenameListDialogFragment extends DialogFragment {
             }
         });
 
-        presenter = new RenameListFragmentPresenterImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), callback, DbInteractor.INSTANCE);
+        presenter = new RenameListFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
+                MainThreadImpl.Companion.getInstance(), callback, DbInteractor.INSTANCE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
