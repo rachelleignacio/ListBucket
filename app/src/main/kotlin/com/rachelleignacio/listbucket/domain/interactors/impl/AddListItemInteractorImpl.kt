@@ -14,7 +14,9 @@ class AddListItemInteractorImpl(threadExecutor: ThreadExecutor,
                                 mainThread: MainThread,
                                 private val callback: AddListItemInteractor.Callback,
                                 private val dbInteractor: DbInteractor,
-                                private val newItem: ListItem) : AbstractInteractor(threadExecutor, mainThread), AddListItemInteractor {
+                                private val newItem: ListItem)
+    : AbstractInteractor(threadExecutor, mainThread), AddListItemInteractor {
+    
     override fun run() {
         dbInteractor.saveListItem(newItem)
         mainThread.post(Runnable { callback.onListItemAdded(newItem) })
