@@ -55,7 +55,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
     public void addListItem(String listItemName) {
         ListItem itemToSave = new ListItem(parentList, listItemName);
         AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(threadExecutor, mainThread,
-                this, dbInteractor, parentList, itemToSave);
+                this, dbInteractor, itemToSave);
         addItemInteractor.execute();
     }
 

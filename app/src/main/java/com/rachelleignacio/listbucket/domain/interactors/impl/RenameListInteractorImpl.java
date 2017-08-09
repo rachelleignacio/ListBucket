@@ -29,7 +29,7 @@ public class RenameListInteractorImpl extends AbstractInteractor implements Rena
     @Override
     public void run() {
         database.renameList(listToRename, newListName);
-        mainThread.post(new Runnable() {
+        getMainThread().post(new Runnable() {
             @Override
             public void run() {
                 callback.onListRenamed();

@@ -25,7 +25,7 @@ public class GetAllListItemsInteractorImpl extends AbstractInteractor implements
 
     @Override
     public void run() {
-        mainThread.post(new Runnable() {
+        getMainThread().post(new Runnable() {
             @Override
             public void run() {
                 callback.onListItemsRetrieved(database.getListItems(parentListId));

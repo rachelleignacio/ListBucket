@@ -23,7 +23,7 @@ public class GetListBucketInteractorImpl extends AbstractInteractor implements G
 
     @Override
     public void run() {
-        mainThread.post(new Runnable() {
+        getMainThread().post(new Runnable() {
             @Override
             public void run() {
                 callback.onListsRetrieved(database.getAllLists());

@@ -29,7 +29,7 @@ public class DeleteListItemInteractorImpl extends AbstractInteractor implements 
     @Override
     public void run() {
         database.deleteListItem(itemToDelete);
-        mainThread.post(new Runnable() {
+        getMainThread().post(new Runnable() {
             @Override
             public void run() {
                 callback.onListItemDeleted(listAdapterPosition);

@@ -28,7 +28,7 @@ public class CreateListInteractorImpl extends AbstractInteractor implements Crea
     @Override
     public void run() {
         database.saveList(newList);
-        mainThread.post(new Runnable() {
+        getMainThread().post(new Runnable() {
             @Override
             public void run() {
                 callback.onListCreated(newList);
