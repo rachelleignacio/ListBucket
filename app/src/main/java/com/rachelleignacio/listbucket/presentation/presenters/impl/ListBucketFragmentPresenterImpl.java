@@ -62,6 +62,7 @@ public class ListBucketFragmentPresenterImpl extends AbstractPresenter implement
     public void onListCreated(List newList) {
         lists.add(newList);
         view.showLists(lists);
+        view.onCLickList(newList);
     }
 
     @Override
