@@ -51,7 +51,7 @@ public class CreateListDialogFragment extends DialogFragment {
         editTextBox = view.findViewById(R.id.create_list_edittext);
         editTextBox.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        Keyboard.getInstance().showKeyboard(imm);
+        Keyboard.INSTANCE.show(imm);
         editTextBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -83,7 +83,7 @@ public class CreateListDialogFragment extends DialogFragment {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     presenter.createList(editTextBox.getText().toString());
-                    Keyboard.getInstance().hideKeyboard(imm, editTextBox.getWindowToken());
+                    Keyboard.INSTANCE.hide(imm, editTextBox.getWindowToken());
                 }
             }
         });
