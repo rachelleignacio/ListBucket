@@ -22,6 +22,7 @@ import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.domain.interactors.CreateListInteractor;
 import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.CreateListFragmentPresenterImpl;
+import com.rachelleignacio.listbucket.util.Keyboard;
 
 /**
  * Created by rachelleignacio on 3/6/17.
@@ -50,7 +51,7 @@ public class CreateListDialogFragment extends DialogFragment {
         editTextBox = view.findViewById(R.id.create_list_edittext);
         editTextBox.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        showKeyboard(imm);
+        Keyboard.getInstance().showKeyboard(imm);
         editTextBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -82,18 +83,10 @@ public class CreateListDialogFragment extends DialogFragment {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     presenter.createList(editTextBox.getText().toString());
-                    hideKeyboard(imm);
+                    Keyboard.getInstance().hideKeyboard(imm, editTextBox.getWindowToken());
                 }
             }
         });
         return builder.create();
-    }
-
-    private void showKeyboard(InputMethodManager imm) {
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }
-
-    private void hideKeyboard(InputMethodManager imm) {
-        imm.hideSoftInputFromWindow(editTextBox.getWindowToken(), 0);
     }
 }

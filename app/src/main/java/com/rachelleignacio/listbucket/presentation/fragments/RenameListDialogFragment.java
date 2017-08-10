@@ -23,6 +23,7 @@ import com.rachelleignacio.listbucket.domain.interactors.RenameListInteractor;
 import com.rachelleignacio.listbucket.domain.models.List;
 import com.rachelleignacio.listbucket.presentation.presenters.RenameListFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.RenameListFragmentPresenterImpl;
+import com.rachelleignacio.listbucket.util.Keyboard;
 
 /**
  * Created by rachelleignacio on 4/19/17.
@@ -51,10 +52,10 @@ public class RenameListDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_rename_list, null);
 
-        editTextBox = (EditText) view.findViewById(R.id.rename_list_edittext);
+        editTextBox = view.findViewById(R.id.rename_list_edittext);
         editTextBox.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        showKeyboard(imm);
+        Keyboard.getInstance().showKeyboard(imm);
         editTextBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -87,18 +88,10 @@ public class RenameListDialogFragment extends DialogFragment {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     presenter.renameList(listToRename, newName);
-                    hideKeyboard(imm);
+                    Keyboard.getInstance().hideKeyboard(imm, editTextBox.getWindowToken());
                 }
             }
         });
         return builder.create();
-    }
-
-    private void showKeyboard(InputMethodManager imm) {
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }
-
-    private void hideKeyboard(InputMethodManager imm) {
-        imm.hideSoftInputFromWindow(editTextBox.getWindowToken(), 0);
     }
 }

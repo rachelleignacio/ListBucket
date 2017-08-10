@@ -1,6 +1,7 @@
 package com.rachelleignacio.listbucket.presentation.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl;
+import com.rachelleignacio.listbucket.util.Keyboard;
 
 /**
  * Created by rachelleignacio on 3/4/17.
@@ -87,6 +90,8 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
             }
         });
         addListItemTextbox.requestFocus();
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        Keyboard.getInstance().showKeyboard(imm);
     }
 
     @Override
