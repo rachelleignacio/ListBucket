@@ -91,7 +91,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         });
         addListItemTextbox.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        Keyboard.INSTANCE   .show(imm);
+        Keyboard.INSTANCE.show(imm);
     }
 
     @Override

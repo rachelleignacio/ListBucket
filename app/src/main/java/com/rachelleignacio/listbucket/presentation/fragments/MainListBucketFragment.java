@@ -19,7 +19,6 @@ import com.rachelleignacio.listbucket.db.DbInteractor;
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl;
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl;
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback;
-import com.rachelleignacio.listbucket.presentation.listeners.OnStartDragListener;
 import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter;
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListBucketFragmentPresenterImpl;
 
