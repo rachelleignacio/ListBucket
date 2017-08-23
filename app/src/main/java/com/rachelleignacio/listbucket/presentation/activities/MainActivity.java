@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityPrese
         setSupportActionBar(toolbar);
 
         mainActivityPresenter = new MainActivityPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
-                MainThreadImpl.Companion.getInstance(), DbInteractor.INSTANCE, this);
+                MainThreadImpl.Companion.getInstance());
 
         if (savedInstanceState == null) {
             showListBucket();
