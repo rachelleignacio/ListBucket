@@ -47,7 +47,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ListsAdapter.this.view.onCLickList(list);
+                ListsAdapter.this.view.onClickList(list);
             }
         });
     }

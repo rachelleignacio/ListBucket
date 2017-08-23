@@ -74,7 +74,7 @@ public class MainListBucketFragment extends Fragment implements ListBucketFragme
     }
 
     @Override
-    public void onCLickList(
+    public void onClickList(
             List listToView) {
         ((MainActivity) getActivity()).showList(listToView);
     }
