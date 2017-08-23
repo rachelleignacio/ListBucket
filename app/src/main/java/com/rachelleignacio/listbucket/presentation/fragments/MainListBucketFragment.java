@@ -27,8 +27,7 @@ import com.rachelleignacio.listbucket.presentation.presenters.impl.ListBucketFra
  * Created by rachelleignacio on 3/4/17.
  */
 
-public class MainListBucketFragment extends Fragment
-        implements ListBucketFragmentPresenter.View, OnStartDragListener {
+public class MainListBucketFragment extends Fragment implements ListBucketFragmentPresenter.View {
 
     private ItemTouchHelper listTouchListener;
     private ListBucketFragmentPresenter presenter;
@@ -95,11 +94,6 @@ public class MainListBucketFragment extends Fragment
     @Override
     public void onClickRenameList(List listToRename) {
         presenter.showRenameListDialog(getActivity().getSupportFragmentManager(), listToRename);
-    }
-
-    @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        listTouchListener.startDrag(viewHolder);
     }
 
     private void showFabAddButton() {
