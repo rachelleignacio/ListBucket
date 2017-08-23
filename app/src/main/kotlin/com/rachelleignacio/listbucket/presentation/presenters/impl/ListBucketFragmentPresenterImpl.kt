@@ -1,6 +1,5 @@
 package com.rachelleignacio.listbucket.presentation.presenters.impl
 
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.rachelleignacio.listbucket.db.DbInteractor
 import com.rachelleignacio.listbucket.domain.executor.MainThread
