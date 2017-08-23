@@ -39,8 +39,8 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
 
     @Override
     public void getListItems() {
-        GetAllListItemsInteractor getItemsInteractor = new GetAllListItemsInteractorImpl(threadExecutor,
-                mainThread, this, dbInteractor, parentList.getId());
+        GetAllListItemsInteractor getItemsInteractor = new GetAllListItemsInteractorImpl(getThreadExecutor(),
+                getMainThread(), this, dbInteractor, parentList.getId());
         getItemsInteractor.execute();
     }
 
@@ -54,7 +54,7 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
     @Override
     public void addListItem(String listItemName) {
         ListItem itemToSave = new ListItem(parentList, listItemName);
-        AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(threadExecutor, mainThread,
+        AddListItemInteractor addItemInteractor = new AddListItemInteractorImpl(getThreadExecutor(), getMainThread(),
                 this, dbInteractor, itemToSave);
         addItemInteractor.execute();
     }
@@ -67,8 +67,8 @@ public class ListItemsFragmentPresenterImpl extends AbstractPresenter implements
 
     @Override
     public void deleteListItem(int position) {
-        DeleteListItemInteractor deleteListItemInteractor = new DeleteListItemInteractorImpl(threadExecutor,
-                mainThread, this, dbInteractor, listItems.get(position), position);
+        DeleteListItemInteractor deleteListItemInteractor = new DeleteListItemInteractorImpl(getThreadExecutor(),
+                getMainThread(), this, dbInteractor, listItems.get(position), position);
         deleteListItemInteractor.execute();
     }
 

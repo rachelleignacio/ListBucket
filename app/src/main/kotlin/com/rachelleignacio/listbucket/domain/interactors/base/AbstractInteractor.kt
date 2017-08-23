@@ -20,7 +20,7 @@ abstract class AbstractInteractor(protected var threadExecutor: ThreadExecutor, 
 
     override fun execute() {
         isRunning = true
-        threadExecutor!!.execute(this)
+        threadExecutor.execute(this)
     }
 
     fun cancel() {

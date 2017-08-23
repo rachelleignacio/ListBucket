@@ -40,8 +40,8 @@ public class ListBucketFragmentPresenterImpl extends AbstractPresenter implement
 
     @Override
     public void getLists() {
-        GetListBucketInteractor getListsInterator = new GetListBucketInteractorImpl(threadExecutor,
-                mainThread, this, dbInteractor);
+        GetListBucketInteractor getListsInterator = new GetListBucketInteractorImpl(getThreadExecutor(),
+                getMainThread(), this, dbInteractor);
         getListsInterator.execute();
     }
 
@@ -67,8 +67,8 @@ public class ListBucketFragmentPresenterImpl extends AbstractPresenter implement
 
     @Override
     public void deleteListFromBucket(int position) {
-        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(threadExecutor,
-                mainThread, this, dbInteractor, lists.get(position), position);
+        DeleteListInteractorImpl deleteListInteractor = new DeleteListInteractorImpl(getThreadExecutor(),
+                getMainThread(), this, dbInteractor, lists.get(position), position);
         deleteListInteractor.execute();
     }
 

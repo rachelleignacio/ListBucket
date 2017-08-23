@@ -27,8 +27,8 @@ public class CreateListFragmentPresenterImpl extends AbstractPresenter implement
     @Override
     public void createList(String listName) {
         List listToSave = new List(listName);
-        CreateListInteractor createListInteractor = new CreateListInteractorImpl(threadExecutor,
-                mainThread, callback, dbInteractor, listToSave);
+        CreateListInteractor createListInteractor = new CreateListInteractorImpl(getThreadExecutor(),
+                getMainThread(), callback, dbInteractor, listToSave);
         createListInteractor.execute();
     }
 }

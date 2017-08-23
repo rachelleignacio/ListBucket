@@ -28,7 +28,7 @@ public class RenameListFragmentPresenterImpl extends AbstractPresenter
 
     @Override
     public void renameList(List listToRename, String newListName) {
-        RenameListInteractor renameListInteractor = new RenameListInteractorImpl(threadExecutor, mainThread,
+        RenameListInteractor renameListInteractor = new RenameListInteractorImpl(getThreadExecutor(), getMainThread(),
                 callback, dbInteractor, listToRename, newListName);
         renameListInteractor.execute();
     }
