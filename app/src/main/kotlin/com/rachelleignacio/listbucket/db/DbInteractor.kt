@@ -12,7 +12,7 @@ import com.raizlabs.android.dbflow.sql.language.Select
 /**
  * Created by rachelleignacio on 8/4/17.
  */
-object  DbInteractor {
+class DbInteractor private constructor() {
 
     /**
      * Method for getting all the stored lists.
@@ -59,5 +59,13 @@ object  DbInteractor {
     fun renameList(list: List, newName: String) {
         list.name = newName
         list.update()
+    }
+
+    companion object {
+        private val dbInteractor = DbInteractor()
+        val instance: DbInteractor
+            get() {
+                return dbInteractor
+            }
     }
 }

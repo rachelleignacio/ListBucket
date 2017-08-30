@@ -50,7 +50,7 @@ public class MainListBucketFragment extends Fragment implements ListBucketFragme
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new ListBucketFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
-                MainThreadImpl.Companion.getInstance(), DbInteractor.INSTANCE, this);
+                MainThreadImpl.Companion.getInstance(), DbInteractor.Companion.getInstance(), this);
         showFabAddButton();
         initLists();
     }

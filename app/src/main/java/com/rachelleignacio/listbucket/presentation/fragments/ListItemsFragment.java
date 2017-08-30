@@ -57,7 +57,7 @@ public class ListItemsFragment extends Fragment implements ListItemsFragmentPres
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new ListItemsFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
-                MainThreadImpl.Companion.getInstance(), DbInteractor.INSTANCE, this, parentList);
+                MainThreadImpl.Companion.getInstance(), DbInteractor.Companion.getInstance(), this, parentList);
 
         getActivity().setTitle(parentList.getName());
         initListItems();

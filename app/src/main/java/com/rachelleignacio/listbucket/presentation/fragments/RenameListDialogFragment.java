@@ -69,7 +69,7 @@ public class RenameListDialogFragment extends DialogFragment {
         });
 
         presenter = new RenameListFragmentPresenterImpl(ThreadExecutorImpl.Companion.getInstance(),
-                MainThreadImpl.Companion.getInstance(), callback, DbInteractor.INSTANCE);
+                MainThreadImpl.Companion.getInstance(), callback, DbInteractor.Companion.getInstance());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
