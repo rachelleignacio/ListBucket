@@ -14,5 +14,6 @@
         android:background="@android:color/transparent"
         android:gravity="top"
         android:inputType="textCapWords"
-        android:imeOptions="actionGo"/>
+        android:imeOptions="actionGo"
+        android:focusable="true"/>
 </LinearLayout>

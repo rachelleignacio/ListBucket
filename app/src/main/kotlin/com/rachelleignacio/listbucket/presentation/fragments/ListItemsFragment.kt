@@ -1,7 +1,6 @@
 package com.rachelleignacio.listbucket.presentation.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.rachelleignacio.listbucket.R
@@ -57,6 +55,8 @@ class ListItemsFragment @SuppressLint("ValidFragment") private constructor() : F
 
     private fun initAddListItemView() {
         val addListItemTextBox = activity.findViewById<EditText>(R.id.add_list_item_edittext)
+        addListItemTextBox.requestFocus()
+        Keyboard.show(activity, addListItemTextBox)
         addListItemTextBox.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
@@ -74,8 +74,6 @@ class ListItemsFragment @SuppressLint("ValidFragment") private constructor() : F
         }
 
         addListItemTextBox.requestFocus()
-        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        Keyboard.show(imm)
     }
 
     override fun showListItems(items: MutableList<ListItem>) {

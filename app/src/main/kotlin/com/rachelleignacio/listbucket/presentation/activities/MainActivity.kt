@@ -10,6 +10,7 @@ import com.rachelleignacio.listbucket.domain.models.List
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment
 import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment
 import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter
+import com.rachelleignacio.listbucket.util.Keyboard
 
 /**
  * Created by rachelleignacio on 8/29/17.
@@ -41,6 +42,11 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
                 .replace(CONTENT_FRAME_ID, ListItemsFragment.newInstance(list))
                 .addToBackStack(BACKSTACK_NAME)
                 .commit()
+    }
+
+    override fun onStop() {
+        Keyboard.hide(this, this.currentFocus)
+        super.onStop()
     }
 
     override fun onBackPressed() {

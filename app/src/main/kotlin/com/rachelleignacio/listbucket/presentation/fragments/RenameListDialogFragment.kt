@@ -2,12 +2,10 @@ package com.rachelleignacio.listbucket.presentation.fragments
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.rachelleignacio.listbucket.R
@@ -34,6 +32,7 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") private constructo
 
         editTextBox = view.findViewById(R.id.rename_list_edittext)
         editTextBox.requestFocus()
+        Keyboard.show(activity, editTextBox)
         editTextBox.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
@@ -43,27 +42,37 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") private constructo
             handled
         }
 
-        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        Keyboard.show(imm)
 
         presenter = RenameListFragmentPresenterImpl(ThreadExecutorImpl.instance, MainThreadImpl.instance,
                 callback, DbInteractor.instance)
 
         val builder = AlertDialog.Builder(activity)
         builder.setView(view)
-        builder.setNegativeButton(getString(android.R.string.cancel)) { _, _ -> dismiss() }
-        builder.setPositiveButton(getString(R.string.rename_list_dialog_submit)) { _, _ ->
-            val newName = editTextBox.text.toString()
-            if (newName.isEmpty()) {
-                Toast.makeText(activity, getString(R.string.create_list_error_toast_msg),
-                        Toast.LENGTH_SHORT).show()
-            } else {
-                Keyboard.hide(imm, editTextBox.windowToken)
-                presenter.renameList(listToRename, newName)
+        builder.setNegativeButton(getString(android.R.string.cancel), null)
+        builder.setPositiveButton(getString(R.string.rename_list_dialog_submit), null)
+
+        val dialog: AlertDialog = builder.create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener { dismiss() }
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val newName = editTextBox.text.toString()
+                if (newName.isEmpty()) {
+                    Toast.makeText(activity, getString(R.string.create_list_error_toast_msg),
+                            Toast.LENGTH_SHORT).show()
+                } else {
+                    Keyboard.hide(activity, editTextBox)
+                    presenter.renameList(listToRename, newName)
+                    dismiss()
+                }
             }
         }
 
-        return builder.create()
+        return dialog
+    }
+
+    override fun onStart() {
+        super.onStart()
+
     }
 
     companion object {
