@@ -35,7 +35,14 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
     private lateinit var itemsAdapter: ListItemsAdapter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        readBundleArgs(savedInstanceState)
         return inflater!!.inflate(R.layout.fragment_list_items_layout, container, false)
+    }
+
+    private fun readBundleArgs(bundle: Bundle?) {
+        if (bundle != null) {
+            parentList = bundle.getSerializable(CURRENT_LIST_ARG) as List
+        }
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -47,6 +54,11 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
         activity.title = parentList.name
         initListItems()
         initAddListItemView()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState!!.putSerializable(CURRENT_LIST_ARG, parentList)
+        super.onSaveInstanceState(outState)
     }
 
     private fun initListItems() {
@@ -96,6 +108,7 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
     }
 
     companion object {
+        val CURRENT_LIST_ARG = "currentList"
         fun newInstance(parentList: List): ListItemsFragment {
             val fragment = ListItemsFragment()
             fragment.parentList = parentList
