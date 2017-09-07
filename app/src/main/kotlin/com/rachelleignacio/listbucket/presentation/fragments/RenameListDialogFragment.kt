@@ -21,7 +21,7 @@ import com.rachelleignacio.listbucket.util.Keyboard
 /**
  * Created by rachelleignacio on 8/30/17.
  */
-class RenameListDialogFragment @SuppressLint("ValidFragment") private constructor() : DialogFragment() {
+class RenameListDialogFragment @SuppressLint("ValidFragment") internal constructor() : DialogFragment() {
     private lateinit var editTextBox: EditText
     private lateinit var callback: RenameListInteractor.Callback
     private lateinit var presenter: RenameListFragmentPresenter

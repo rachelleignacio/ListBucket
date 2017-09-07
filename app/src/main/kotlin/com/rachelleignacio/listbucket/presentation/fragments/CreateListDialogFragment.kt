@@ -20,7 +20,7 @@ import com.rachelleignacio.listbucket.util.Keyboard
 /**
  * Created by rachelleignacio on 8/29/17.
  */
-class CreateListDialogFragment @SuppressLint("ValidFragment") private constructor() : DialogFragment() {
+class CreateListDialogFragment @SuppressLint("ValidFragment") internal constructor() : DialogFragment() {
 
     private lateinit var editTextBox: EditText
     private lateinit var callback: CreateListInteractor.Callback

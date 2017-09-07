@@ -27,7 +27,7 @@ import com.rachelleignacio.listbucket.util.Keyboard
 /**
  * Created by rachelleignacio on 8/30/17.
  */
-class ListItemsFragment @SuppressLint("ValidFragment") private constructor() : Fragment(),
+class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : Fragment(),
         ListItemsFragmentPresenter.View {
 
     private lateinit var presenter: ListItemsFragmentPresenter

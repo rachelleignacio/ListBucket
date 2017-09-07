@@ -24,7 +24,7 @@ import com.rachelleignacio.listbucket.presentation.presenters.impl.ListBucketFra
 /**
  * Created by rachelleignacio on 8/30/17.
  */
-class MainListBucketFragment @SuppressLint("ValidFragment") private constructor() : Fragment(),
+class MainListBucketFragment @SuppressLint("ValidFragment") internal constructor() : Fragment(),
         ListBucketFragmentPresenter.View {
 
     private lateinit var presenter: ListBucketFragmentPresenter
