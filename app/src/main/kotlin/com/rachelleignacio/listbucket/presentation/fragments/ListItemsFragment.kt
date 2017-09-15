@@ -9,20 +9,25 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import com.rachelleignacio.listbucket.R
+import com.rachelleignacio.listbucket.constants.SharedPrefs
 import com.rachelleignacio.listbucket.db.DbInteractor
 import com.rachelleignacio.listbucket.domain.executor.impl.MainThreadImpl
 import com.rachelleignacio.listbucket.domain.executor.impl.ThreadExecutorImpl
 import com.rachelleignacio.listbucket.domain.models.List
 import com.rachelleignacio.listbucket.domain.models.ListItem
+import com.rachelleignacio.listbucket.presentation.activities.MainActivity
 import com.rachelleignacio.listbucket.presentation.adapters.ListItemsAdapter
 import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCallback
 import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentPresenter
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListItemsFragmentPresenterImpl
 import com.rachelleignacio.listbucket.util.Keyboard
+import com.rachelleignacio.listbucket.util.Prefs
+import com.rachelleignacio.listbucket.util.Prefs.get
 
 /**
  * Created by rachelleignacio on 8/30/17.
@@ -59,6 +64,21 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
     override fun onSaveInstanceState(outState: Bundle?) {
         outState!!.putSerializable(CURRENT_LIST_ARG, parentList)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (Prefs.get(activity)[SharedPrefs.SCREEN_AWAKE_KEY, false] as Boolean) {
+            (activity as MainActivity).setScreenAlwaysOn(true)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // clear FLAG_KEEP_SCREEN_ON when navigating away from list detail view
+        if (Prefs.get(activity)[SharedPrefs.SCREEN_AWAKE_KEY, false] as Boolean) {
+            (activity as MainActivity).setScreenAlwaysOn(false)
+        }
     }
 
     private fun initListItems() {

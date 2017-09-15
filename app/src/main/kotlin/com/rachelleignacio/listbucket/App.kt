@@ -8,7 +8,7 @@ import com.raizlabs.android.dbflow.config.FlowManager
 /**
  * Created by rachelleignacio on 8/23/17.
  */
-class ListBucketApplication : Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
         FlowManager.init(FlowConfig.Builder(this)

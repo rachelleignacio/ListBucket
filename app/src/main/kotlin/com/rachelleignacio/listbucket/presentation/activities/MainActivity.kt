@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import com.rachelleignacio.listbucket.R
+import com.rachelleignacio.listbucket.constants.SharedPrefs
 import com.rachelleignacio.listbucket.domain.models.List
 import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment
 import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment
 import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter
 import com.rachelleignacio.listbucket.util.Keyboard
+import com.rachelleignacio.listbucket.util.Prefs
+import com.rachelleignacio.listbucket.util.Prefs.set
 
 /**
  * Created by rachelleignacio on 8/29/17.
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     }
 
     override fun onStop() {
-        Keyboard.hide(this, this.currentFocus)
+        if (this.currentFocus != null) Keyboard.hide(this, this.currentFocus)
         super.onStop()
     }
 
@@ -60,7 +64,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // Inflage the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
@@ -68,13 +72,20 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         // Handle action bar item clicks here. The action bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
-        val id = item!!.itemId
-
-        if (id == R.id.action_settings) {
-            return true
+        return when (item!!.itemId) {
+            R.id.screen_always_on_toggle -> {
+                setScreenAlwaysOn(!item.isChecked)
+                Prefs.get(this)[SharedPrefs.SCREEN_AWAKE_KEY] = !item.isChecked
+                item.isChecked = !item.isChecked
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
 
-        return super.onOptionsItemSelected(item)
+    fun setScreenAlwaysOn(isEnabled: Boolean) {
+        if (isEnabled) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     companion object {
