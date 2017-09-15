@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     override fun onStop() {
         if (this.currentFocus != null) Keyboard.hide(this, this.currentFocus)
         super.onStop()
+        setScreenAlwaysOn(false)
     }
 
     override fun onBackPressed() {
@@ -84,7 +85,8 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     }
 
     fun setScreenAlwaysOn(isEnabled: Boolean) {
-        if (isEnabled) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        if (isEnabled && supportFragmentManager.backStackEntryCount != 1)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
