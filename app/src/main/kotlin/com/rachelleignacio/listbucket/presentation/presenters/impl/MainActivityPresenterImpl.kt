@@ -8,5 +8,6 @@ import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresen
 /**
  * Created by rachelleignacio on 8/23/17.
  */
-class MainActivityPresenterImpl(threadExecutor: ThreadExecutor, mainThread: MainThread)
-    : AbstractPresenter(threadExecutor, mainThread), MainActivityPresenter
+class MainActivityPresenterImpl(threadExecutor: ThreadExecutor,
+                                mainThread: MainThread
+) : AbstractPresenter(threadExecutor, mainThread), MainActivityPresenter

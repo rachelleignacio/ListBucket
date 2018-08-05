@@ -24,25 +24,25 @@ import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragment
 class ListBucketFragmentPresenterImpl(threadExecutor: ThreadExecutor,
                                       mainThread: MainThread,
                                       private val dbInteractor: DbInteractor,
-                                      private val view: ListBucketFragmentPresenter.View)
-    : AbstractPresenter(threadExecutor, mainThread),
+                                      private val view: ListBucketFragmentPresenter.View
+) : AbstractPresenter(threadExecutor, mainThread),
         ListBucketFragmentPresenter,
         GetListBucketInteractor.Callback,
         CreateListInteractor.Callback,
         DeleteListInteractor.Callback,
-        RenameListInteractor.Callback {
+        RenameListInteractor.Callback
+{
 
-    private var lists: MutableList<List>? = null
+    private var lists = mutableListOf<List>()
 
     override fun getLists() {
-        val getListsInteractor = GetListBucketInteractorImpl(threadExecutor, mainThread,
-                this, dbInteractor)
-        getListsInteractor.execute()
+        GetListBucketInteractorImpl(threadExecutor, mainThread, this, dbInteractor)
+            .execute()
     }
 
     override fun onListsRetrieved(lists: MutableList<List>) {
-        this.lists = ArrayList()
-        this.lists!!.addAll(lists)
+        this.lists.clear()
+        this.lists.addAll(lists)
         view.showLists(lists)
     }
 
@@ -52,20 +52,19 @@ class ListBucketFragmentPresenterImpl(threadExecutor: ThreadExecutor,
     }
 
     override fun onListCreated(newList: List) {
-        lists!!.add(newList)
-        view.showLists(lists!!)
+        lists.add(newList)
+        view.showLists(lists)
         view.onClickList(newList)
     }
 
     override fun deleteListFromBucket(adapterPosition: Int) {
-        val deleteListInteractor = DeleteListInteractorImpl(threadExecutor, mainThread, this,
-                dbInteractor, lists!!.get(adapterPosition), adapterPosition)
-        deleteListInteractor.execute()
+        DeleteListInteractorImpl(threadExecutor, mainThread, this, dbInteractor, lists[adapterPosition], adapterPosition)
+            .execute()
     }
 
     override fun onListDeleted(adapterPosition: Int) {
-        lists!!.removeAt(adapterPosition)
-        view.showLists(lists!!)
+        lists.removeAt(adapterPosition)
+        view.showLists(lists)
     }
 
     override fun showRenameListDialog(fragmentManager: FragmentManager, listToRename: List) {
@@ -74,6 +73,6 @@ class ListBucketFragmentPresenterImpl(threadExecutor: ThreadExecutor,
     }
 
     override fun onListRenamed() {
-        view.showLists(lists!!)
+        view.showLists(lists)
     }
 }

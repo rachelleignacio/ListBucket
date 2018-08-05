@@ -15,8 +15,8 @@ class DeleteListItemInteractorImpl(threadExecutor: ThreadExecutor,
                                    private val callback: DeleteListItemInteractor.Callback,
                                    private val dbInteractor: DbInteractor,
                                    private val itemToDelete: ListItem,
-                                   private val adapterPosition: Int)
-    : AbstractInteractor(threadExecutor, mainThread), DeleteListItemInteractor {
+                                   private val adapterPosition: Int
+) : AbstractInteractor(threadExecutor, mainThread), DeleteListItemInteractor {
 
     override fun run() {
         dbInteractor.deleteListItem(itemToDelete)

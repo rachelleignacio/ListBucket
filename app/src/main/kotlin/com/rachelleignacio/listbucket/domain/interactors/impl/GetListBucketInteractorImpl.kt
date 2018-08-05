@@ -12,8 +12,8 @@ import com.rachelleignacio.listbucket.domain.interactors.base.AbstractInteractor
 class GetListBucketInteractorImpl(threadExecutor: ThreadExecutor,
                                   mainThread: MainThread,
                                   private val callback: GetListBucketInteractor.Callback,
-                                  private val dbInteractor: DbInteractor)
-    : AbstractInteractor(threadExecutor, mainThread), GetListBucketInteractor {
+                                  private val dbInteractor: DbInteractor
+) : AbstractInteractor(threadExecutor, mainThread), GetListBucketInteractor {
 
     override fun run() {
         mainThread.post(Runnable { callback.onListsRetrieved(dbInteractor.getAllLists()) })

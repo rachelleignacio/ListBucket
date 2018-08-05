@@ -26,8 +26,7 @@ fun newMainListBucketInstance() = MainListBucketFragment()
 /**
  * Created by rachelleignacio on 8/30/17.
  */
-class MainListBucketFragment @SuppressLint("ValidFragment") internal constructor() : Fragment(),
-        ListBucketFragmentPresenter.View {
+class MainListBucketFragment @SuppressLint("ValidFragment") internal constructor() : Fragment(), ListBucketFragmentPresenter.View {
 
     private lateinit var presenter: ListBucketFragmentPresenter
     private lateinit var listsAdapter: ListsAdapter

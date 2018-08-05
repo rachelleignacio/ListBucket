@@ -13,8 +13,8 @@ import java.io.Serializable
         orderedCursorLookUp = true,
         assignDefaultValuesFromCursor = false,
         cachingEnabled = true)
-class List(@PrimaryKey(autoincrement = true) var id: Int? = null,
-           var name: String? = null) : Serializable {
+class List(@PrimaryKey(autoincrement = true) var id: Int = -1,
+           var name: String = "") : Serializable {
 
-    constructor(name: String?) : this(null, name)
+    constructor(name: String = "") : this(-1, name)
 }

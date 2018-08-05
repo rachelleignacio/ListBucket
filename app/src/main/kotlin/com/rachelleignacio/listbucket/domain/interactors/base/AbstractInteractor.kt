@@ -8,8 +8,8 @@ import com.rachelleignacio.listbucket.domain.executor.ThreadExecutor
  */
 abstract class AbstractInteractor(protected var threadExecutor: ThreadExecutor, protected var mainThread: MainThread) : Interactor {
 
-    @Volatile protected var isCanceled: Boolean? = null
-    @Volatile protected var isRunning: Boolean? = null
+    @Volatile private var isCanceled: Boolean? = null
+    @Volatile private var isRunning: Boolean? = null
 
     /**
      * This method contains the actual business logic of the interactor. It SHOULD NOT BE USED

@@ -14,9 +14,8 @@ import com.rachelleignacio.listbucket.presentation.presenters.ListItemsFragmentP
  * Created by rachelleignacio on 8/29/17.
  */
 class ListItemsAdapter(private val listItems: MutableList<ListItem>,
-                       private val view: ListItemsFragmentPresenter.View)
-    : RecyclerView.Adapter<ListItemsAdapter.ViewHolder>(), ListAdapterTouchListener {
-
+                       private val view: ListItemsFragmentPresenter.View
+) : RecyclerView.Adapter<ListItemsAdapter.ViewHolder>(), ListAdapterTouchListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
             LayoutInflater

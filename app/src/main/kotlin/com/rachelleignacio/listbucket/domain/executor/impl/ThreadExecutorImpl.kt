@@ -20,9 +20,11 @@ object ThreadExecutorImpl : ThreadExecutor {
     private val threadPoolExecutor = ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME.toLong(), TIME_UNIT, WORK_QUEUE)
 
     override fun execute(interactor: AbstractInteractor) {
-        threadPoolExecutor.submit {
-            interactor.run()
-            interactor.onFinished()
-        }
+        threadPoolExecutor.submit { interactor.onSubmit() }
+    }
+
+    private fun AbstractInteractor.onSubmit() {
+        run()
+        onFinished()
     }
 }

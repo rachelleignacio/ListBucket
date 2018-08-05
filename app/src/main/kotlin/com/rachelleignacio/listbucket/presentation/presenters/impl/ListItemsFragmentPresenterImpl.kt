@@ -21,50 +21,48 @@ class ListItemsFragmentPresenterImpl(threadExecutor: ThreadExecutor,
                                      mainThread: MainThread,
                                      private val dbInteractor: DbInteractor,
                                      private val view: ListItemsFragmentPresenter.View,
-                                     private val parentList: List)
-    : AbstractPresenter(threadExecutor, mainThread),
+                                     private val parentList: List
+) : AbstractPresenter(threadExecutor, mainThread),
     ListItemsFragmentPresenter,
     GetAllListItemsInteractor.Callback,
     AddListItemInteractor.Callback,
-    DeleteListItemInteractor.Callback {
+    DeleteListItemInteractor.Callback
+{
 
-    private var listItems: MutableList<ListItem>? = null
+    private var listItems = mutableListOf<ListItem>()
 
     override fun getListItems() {
-        val getItemsInteractor = GetAllListItemsInteractorImpl(threadExecutor, mainThread,
-                this, dbInteractor, parentList.id!!)
-        getItemsInteractor.execute()
+        GetAllListItemsInteractorImpl(threadExecutor, mainThread, this, dbInteractor, parentList.id)
+            .execute()
     }
 
     override fun onListItemsRetrieved(items: MutableList<ListItem>) {
-        listItems = ArrayList()
-        listItems!!.addAll(items)
-        view.showListItems(listItems!!)
+        listItems.clear()
+        listItems.addAll(items)
+        view.showListItems(listItems)
     }
 
     override fun addListItem(listItemName: String) {
         val itemToSave = ListItem(parentList, listItemName)
-        val addItemInteractor = AddListItemInteractorImpl(threadExecutor, mainThread, this,
-                dbInteractor, itemToSave)
-        addItemInteractor.execute()
+        AddListItemInteractorImpl(threadExecutor, mainThread, this, dbInteractor, itemToSave)
+                .execute()
     }
 
     override fun onListItemAdded(newItem: ListItem) {
-        listItems!!.add(newItem)
-        view.showListItems(listItems!!)
+        listItems.add(newItem)
+        view.showListItems(listItems)
     }
 
     override fun deleteListItem(adapterPosition: Int) {
-        val deleteItemInteractor = DeleteListItemInteractorImpl(threadExecutor, mainThread, this,
-                dbInteractor, listItems!!.get(adapterPosition), adapterPosition)
-        deleteItemInteractor.execute()
+        DeleteListItemInteractorImpl(threadExecutor, mainThread, this, dbInteractor, listItems[adapterPosition], adapterPosition)
+                .execute()
     }
 
     override fun onListItemDeleted(adapterPosition: Int) {
-        listItems!!.removeAt(adapterPosition)
-        view.showListItems(listItems!!)
+        listItems.removeAt(adapterPosition)
+        view.showListItems(listItems)
     }
 
     override val listCount: Int
-        get() = listItems?.size ?: 0
+        get() = listItems.size
 }

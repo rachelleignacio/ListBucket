@@ -36,8 +36,7 @@ fun newListItemsFragmentInstance(parentList: List): ListItemsFragment =
 /**
  * Created by rachelleignacio on 8/30/17.
  */
-class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : Fragment(),
-        ListItemsFragmentPresenter.View {
+class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : Fragment(), ListItemsFragmentPresenter.View {
 
     private lateinit var presenter: ListItemsFragmentPresenter
     private lateinit var parentList: List

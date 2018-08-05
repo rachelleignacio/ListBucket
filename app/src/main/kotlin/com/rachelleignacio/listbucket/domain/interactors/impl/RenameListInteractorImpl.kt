@@ -15,8 +15,8 @@ class RenameListInteractorImpl(threadExecutor: ThreadExecutor,
                                private val callback: RenameListInteractor.Callback,
                                private val dbInteractor: DbInteractor,
                                private val listToRename: List,
-                               private val newName: String)
-    : AbstractInteractor(threadExecutor, mainThread), RenameListInteractor {
+                               private val newName: String
+) : AbstractInteractor(threadExecutor, mainThread), RenameListInteractor {
 
     override fun run() {
         dbInteractor.renameList(listToRename, newName)

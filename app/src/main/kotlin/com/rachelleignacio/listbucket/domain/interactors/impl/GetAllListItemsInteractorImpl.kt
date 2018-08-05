@@ -13,8 +13,8 @@ class GetAllListItemsInteractorImpl(threadExecutor: ThreadExecutor,
                                     mainThread: MainThread,
                                     private val callback: GetAllListItemsInteractor.Callback,
                                     private val dbInteractor: DbInteractor,
-                                    private val parentListId: Int)
-    : AbstractInteractor(threadExecutor, mainThread), GetAllListItemsInteractor {
+                                    private val parentListId: Int
+) : AbstractInteractor(threadExecutor, mainThread), GetAllListItemsInteractor {
 
     override fun run() {
         mainThread.post(Runnable { callback.onListItemsRetrieved(dbInteractor.getListItems(parentListId)) })

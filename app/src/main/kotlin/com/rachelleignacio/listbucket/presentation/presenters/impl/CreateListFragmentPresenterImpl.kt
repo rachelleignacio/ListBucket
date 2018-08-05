@@ -15,8 +15,8 @@ import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragment
 class CreateListFragmentPresenterImpl(threadExecutor: ThreadExecutor,
                                       mainThread: MainThread,
                                       private val callback: CreateListInteractor.Callback,
-                                      private val dbInteractor: DbInteractor)
-    : AbstractPresenter(threadExecutor, mainThread), CreateListFragmentPresenter {
+                                      private val dbInteractor: DbInteractor
+) : AbstractPresenter(threadExecutor, mainThread), CreateListFragmentPresenter {
 
     override fun createList(listName: String) {
         val listToSave = List(listName)

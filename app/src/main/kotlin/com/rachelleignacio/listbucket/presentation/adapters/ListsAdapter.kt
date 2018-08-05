@@ -14,9 +14,9 @@ import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragment
 /**
  * Created by rachelleignacio on 8/29/17.
  */
-class ListsAdapter(private val lists: MutableList<List>, private val view: ListBucketFragmentPresenter.View)
-        : RecyclerView.Adapter<ListsAdapter.ViewHolder>(), ListAdapterTouchListener {
-
+class ListsAdapter(private val lists: MutableList<List>,
+                   private val view: ListBucketFragmentPresenter.View
+) : RecyclerView.Adapter<ListsAdapter.ViewHolder>(), ListAdapterTouchListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         LayoutInflater
@@ -32,7 +32,6 @@ class ListsAdapter(private val lists: MutableList<List>, private val view: ListB
     }
 
     override fun getItemCount() = lists.size
-
 
     override fun onRowDismiss(position: Int) { view.onListSwipedToDelete(position) }
 
