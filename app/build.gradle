@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "com.rachelleignacio.listbucket"
         minSdkVersion 19
