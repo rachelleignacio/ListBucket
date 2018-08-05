@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
@@ -34,37 +35,57 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
     private lateinit var presenter: RenameListFragmentPresenter
     private lateinit var listToRename: List
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = activity.layoutInflater.inflate(R.layout.dialog_fragment_rename_list, null)
+    override fun onCreateDialog(savedInstanceState: Bundle?) =
+            initPresenterAndGetListToRename()
+                    .run { inflateView() }
+                    .applyToAlertDialogAndCreate()
+                    .setDialogButtonClickListeners()
 
-        editTextBox = view.findViewById(R.id.rename_list_edittext)
-        editTextBox.requestFocus()
-        Keyboard.show(activity, editTextBox)
-        editTextBox.setOnEditorActionListener { _, actionId, _ ->
-            var handled = false
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE).callOnClick()
-                handled = true
-            }
-            handled
-        }
-
+    private fun initPresenterAndGetListToRename() {
         listToRename = arguments.getSerializable(LIST_TO_RENAME_ARG) as List
         presenter = RenameListFragmentPresenterImpl(ThreadExecutorImpl, MainThreadImpl, callback, DbInteractor)
+    }
 
-        val builder = AlertDialog.Builder(activity)
-        builder.setView(view)
-        builder.setNegativeButton(getString(android.R.string.cancel), null)
-        builder.setPositiveButton(getString(R.string.rename_list_dialog_submit), null)
+    private fun inflateView(): View =
+            activity
+                    .layoutInflater
+                    .inflate(R.layout.dialog_fragment_rename_list, null)
+                    .apply { initEditTextBox() }
 
-        val dialog: AlertDialog = builder.create()
-        dialog.setOnShowListener {
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener { dismiss() }
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+    private fun View.initEditTextBox() {
+        editTextBox = findViewById<EditText>(R.id.rename_list_edittext).apply {
+            requestFocus()
+            Keyboard.show(activity, this)
+            setOnEditorActionListener { _, actionId, _ ->
+                var handled = false
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE).callOnClick()
+                    handled = true
+                }
+                handled
+            }
+        }
+    }
+
+    private fun View.applyToAlertDialogAndCreate() =
+            AlertDialog.Builder(activity)
+                    .setButtonTextAndApplyView(this)
+                    .create()
+
+    private fun AlertDialog.Builder.setButtonTextAndApplyView(view: View) =
+        apply {
+            setView(view)
+            setNegativeButton(getString(android.R.string.cancel), null)
+            setPositiveButton(getString(R.string.rename_list_dialog_submit), null)
+        }
+
+    private fun AlertDialog.setDialogButtonClickListeners() = apply {
+        setOnShowListener {
+            getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener { dismiss() }
+            getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val newName = editTextBox.text.toString()
                 if (newName.isEmpty()) {
-                    Toast.makeText(activity, getString(R.string.create_list_error_toast_msg),
-                            Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.create_list_error_toast_msg), Toast.LENGTH_SHORT).show()
                 } else {
                     Keyboard.hide(activity, editTextBox)
                     presenter.renameList(listToRename, newName)
@@ -72,8 +93,6 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
                 }
             }
         }
-
-        return dialog
     }
 
     companion object {
