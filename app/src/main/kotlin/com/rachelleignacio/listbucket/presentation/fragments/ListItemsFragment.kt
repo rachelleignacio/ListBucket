@@ -29,6 +29,10 @@ import com.rachelleignacio.listbucket.util.Keyboard
 import com.rachelleignacio.listbucket.util.Prefs
 import com.rachelleignacio.listbucket.util.Prefs.get
 
+private const val CURRENT_LIST_ARG = "currentList"
+fun newItemsInstance(parentList: List): ListItemsFragment =
+        ListItemsFragment().apply { arguments = Bundle().apply { putSerializable(CURRENT_LIST_ARG, parentList) } }
+
 /**
  * Created by rachelleignacio on 8/30/17.
  */
@@ -39,22 +43,20 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
     private lateinit var parentList: List
     private lateinit var itemsAdapter: ListItemsAdapter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        readBundleArgs(savedInstanceState)
-        return inflater!!.inflate(R.layout.fragment_list_items_layout, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_list_items_layout, container, false)
 
-    private fun readBundleArgs(bundle: Bundle?) {
-        if (bundle != null) {
-            parentList = bundle.getSerializable(CURRENT_LIST_ARG) as List
+    private fun readBundleArgs() {
+        if (arguments != null) {
+            parentList = arguments.getSerializable(CURRENT_LIST_ARG) as List
         }
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        readBundleArgs()
         presenter = ListItemsFragmentPresenterImpl(ThreadExecutorImpl.instance, MainThreadImpl.instance,
-                DbInteractor.instance, this, parentList)
+                DbInteractor, this, parentList)
 
         activity.title = parentList.name
         initListItems()
@@ -125,14 +127,5 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
     override fun onItemSwipedToDelete(adapterPosition: Int) {
         presenter.deleteListItem(adapterPosition)
         itemsAdapter.notifyItemRemoved(adapterPosition)
-    }
-
-    companion object {
-        val CURRENT_LIST_ARG = "currentList"
-        fun newInstance(parentList: List): ListItemsFragment {
-            val fragment = ListItemsFragment()
-            fragment.parentList = parentList
-            return fragment
-        }
     }
 }

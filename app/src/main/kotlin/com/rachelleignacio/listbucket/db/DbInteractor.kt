@@ -12,35 +12,28 @@ import com.raizlabs.android.dbflow.sql.language.Select
 /**
  * Created by rachelleignacio on 8/4/17.
  */
-class DbInteractor private constructor() {
+object DbInteractor {
 
     /**
      * Method for getting all the stored lists.
      * @return a list of Lists
      */
-    fun getAllLists(): MutableList<List> {
-        return Select().from(List::class.java).queryList()
-    }
+    fun getAllLists(): MutableList<List> = Select().from(List::class.java).queryList()
 
     /**
      * Method for getting all the stored items in a given list
      * @param listId the ID of the list whose items to retrieve
      * @return a list of ListItems
      */
-    fun getListItems(listId: Int): MutableList<ListItem> {
-        return Select()
+    fun getListItems(listId: Int): MutableList<ListItem> =
+            Select()
                 .from(ListItem::class.java)
                 .where(ListItem_Table.parentList_id.eq(listId))
                 .queryList()
-    }
 
-    fun saveList(list: List) {
-        list.save()
-    }
+    fun saveList(list: List) { list.save() }
 
-    fun saveListItem(item: ListItem) {
-        item.save()
-    }
+    fun saveListItem(item: ListItem) { item.save() }
 
     fun deleteList(list: List) {
         val deleteListItems = Select()
@@ -52,20 +45,18 @@ class DbInteractor private constructor() {
         list.delete()
     }
 
-    fun deleteListItem(item: ListItem) {
-        item.delete()
-    }
+    fun deleteListItem(item: ListItem) { item.delete() }
 
     fun renameList(list: List, newName: String) {
         list.name = newName
         list.update()
     }
-
-    companion object {
-        private val dbInteractor = DbInteractor()
-        val instance: DbInteractor
-            get() {
-                return dbInteractor
-            }
-    }
+//
+//    companion object {
+//        private val dbInteractor = DbInteractor()
+//        val instance: DbInteractor
+//            get() {
+//                return dbInteractor
+//            }
+//    }
 }

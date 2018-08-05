@@ -31,7 +31,7 @@ object Prefs {
         }
     }
 
-    operator inline fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null): T? {
+    inline operator fun <reified T : Any> SharedPreferences.get(key: String, defaultValue: T? = null): T? {
         return when(T::class) {
             String::class -> getString(key, defaultValue as? String) as T?
             java.lang.Integer::class -> getInt(key, defaultValue as? Int ?: -1) as T?

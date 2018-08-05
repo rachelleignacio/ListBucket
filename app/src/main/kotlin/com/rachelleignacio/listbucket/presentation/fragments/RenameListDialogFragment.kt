@@ -44,7 +44,7 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
 
 
         presenter = RenameListFragmentPresenterImpl(ThreadExecutorImpl.instance, MainThreadImpl.instance,
-                callback, DbInteractor.instance)
+                callback, DbInteractor)
 
         val builder = AlertDialog.Builder(activity)
         builder.setView(view)

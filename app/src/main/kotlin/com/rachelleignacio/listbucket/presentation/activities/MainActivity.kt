@@ -9,12 +9,15 @@ import android.view.WindowManager
 import com.rachelleignacio.listbucket.R
 import com.rachelleignacio.listbucket.constants.SharedPrefs
 import com.rachelleignacio.listbucket.domain.models.List
-import com.rachelleignacio.listbucket.presentation.fragments.ListItemsFragment
 import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment
+import com.rachelleignacio.listbucket.presentation.fragments.newItemsInstance
 import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter
 import com.rachelleignacio.listbucket.util.Keyboard
 import com.rachelleignacio.listbucket.util.Prefs
 import com.rachelleignacio.listbucket.util.Prefs.set
+
+private const val CONTENT_FRAME_ID = R.id.content_frame
+private const val BACKSTACK_NAME = "MainActivityFragmentStack"
 
 /**
  * Created by rachelleignacio on 8/29/17.
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     override fun showList(list: List) {
         supportFragmentManager
                 .beginTransaction()
-                .replace(CONTENT_FRAME_ID, ListItemsFragment.newInstance(list))
+                .replace(CONTENT_FRAME_ID, newItemsInstance(list))
                 .addToBackStack(BACKSTACK_NAME)
                 .commit()
     }
@@ -85,13 +88,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     }
 
     fun setScreenAlwaysOn(isEnabled: Boolean) {
-        if (isEnabled && supportFragmentManager.backStackEntryCount != 1)
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        if (isEnabled && supportFragmentManager.backStackEntryCount != 1) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
-
-    companion object {
-        val BACKSTACK_NAME = "MainActivityFragmentStack"
-        val CONTENT_FRAME_ID = R.id.content_frame
     }
 }

@@ -38,7 +38,7 @@ class MainListBucketFragment @SuppressLint("ValidFragment") internal constructor
         super.onViewCreated(view, savedInstanceState)
 
         presenter = ListBucketFragmentPresenterImpl(ThreadExecutorImpl.instance, MainThreadImpl.instance,
-                DbInteractor.instance, this)
+                DbInteractor, this)
 
         showFabAddButton()
         initLists()
