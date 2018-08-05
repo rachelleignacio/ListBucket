@@ -19,9 +19,7 @@ class CreateListFragmentPresenterImpl(threadExecutor: ThreadExecutor,
 ) : AbstractPresenter(threadExecutor, mainThread), CreateListFragmentPresenter {
 
     override fun createList(listName: String) {
-        val listToSave = List(listName)
-        val createListInteractor = CreateListInteractorImpl(threadExecutor, mainThread, callback,
-                dbInteractor, listToSave)
-        createListInteractor.execute()
+        CreateListInteractorImpl(threadExecutor, mainThread, callback, dbInteractor, List(listName))
+                .execute()
     }
 }

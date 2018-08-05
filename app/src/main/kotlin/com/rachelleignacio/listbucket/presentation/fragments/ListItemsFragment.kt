@@ -3,13 +3,10 @@ package com.rachelleignacio.listbucket.presentation.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
@@ -61,8 +58,8 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
         initAddListItemView()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState!!.putSerializable(CURRENT_LIST_ARG, parentList)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable(CURRENT_LIST_ARG, parentList)
         super.onSaveInstanceState(outState)
     }
 
@@ -81,45 +78,37 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
         }
     }
 
-    private fun initListItems() {
-        presenter.getListItems()
-    }
+    private fun initListItems() { presenter.getListItems() }
 
     private fun initAddListItemView() {
-        val addListItemTextBox = activity.findViewById<EditText>(R.id.add_list_item_edittext)
-        addListItemTextBox.requestFocus()
-        Keyboard.show(activity, addListItemTextBox)
-        addListItemTextBox.setOnEditorActionListener { _, actionId, _ ->
-            var handled = false
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                if (addListItemTextBox.text.isNotEmpty()) {
-                    presenter.addListItem(addListItemTextBox.text.toString())
-                    itemsAdapter.notifyItemInserted(presenter.listCount)
-                    addListItemTextBox.setText("")
-                } else {
-                    Toast.makeText(activity, getString(R.string.add_list_item_error_toast_msg),
-                            Toast.LENGTH_SHORT).show()
+        with(activity.findViewById<EditText>(R.id.add_list_item_edittext)) {
+            requestFocus()
+            Keyboard.show(activity, this)
+            setOnEditorActionListener { _, actionId, _ ->
+                var handled = false
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    if (text.isNotEmpty()) {
+                        presenter.addListItem(text.toString())
+                        itemsAdapter.notifyItemInserted(presenter.listCount)
+                        setText("")
+                    } else {
+                        Toast.makeText(activity, getString(R.string.add_list_item_error_toast_msg),
+                                Toast.LENGTH_SHORT).show()
+                    }
+                    handled = true
                 }
-                handled = true
+                handled
             }
-            handled
         }
-
-        addListItemTextBox.requestFocus()
     }
 
     override fun showListItems(items: MutableList<ListItem>) {
-        val itemsRecyclerView = activity.findViewById<RecyclerView>(R.id.recycler_view_items)
-        itemsRecyclerView.setHasFixedSize(true)
-        itemsRecyclerView.layoutManager = LinearLayoutManager(activity)
-        itemsRecyclerView.adapter = null
-
-        itemsAdapter = ListItemsAdapter(items, this)
-        itemsRecyclerView.adapter = itemsAdapter
-
-        val itemTouchCallback = ListTouchListenerCallback(itemsAdapter)
-        val itemTouchListener = ItemTouchHelper(itemTouchCallback)
-        itemTouchListener.attachToRecyclerView(itemsRecyclerView)
+        if (activity != null) {
+            itemsAdapter = ListItemsAdapter(items, this)
+            val itemsRecyclerView = initRecyclerView(activity).apply { adapter = itemsAdapter }
+            ItemTouchHelper(ListTouchListenerCallback(itemsAdapter))
+                    .attachToRecyclerView(itemsRecyclerView)
+        }
     }
 
     override fun onItemSwipedToDelete(adapterPosition: Int) {
