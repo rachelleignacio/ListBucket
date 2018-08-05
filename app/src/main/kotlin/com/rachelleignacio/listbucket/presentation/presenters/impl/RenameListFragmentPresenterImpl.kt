@@ -19,12 +19,7 @@ class RenameListFragmentPresenterImpl(threadExecutor: ThreadExecutor,
     : AbstractPresenter(threadExecutor, mainThread), RenameListFragmentPresenter {
 
     override fun renameList(listToRename: List, newName: String) {
-        RenameListInteractorImpl(threadExecutor,
-                    mainThread,
-                    callback,
-                    dbInteractor,
-                    listToRename,
-                    newName)
+        RenameListInteractorImpl(threadExecutor, mainThread, callback, dbInteractor, listToRename, newName)
                 .execute()
     }
 }
