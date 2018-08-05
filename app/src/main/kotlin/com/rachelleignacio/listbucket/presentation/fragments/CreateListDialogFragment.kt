@@ -42,8 +42,7 @@ class CreateListDialogFragment @SuppressLint("ValidFragment") internal construct
         }
 
 
-        presenter = CreateListFragmentPresenterImpl(ThreadExecutorImpl.instance,
-                MainThreadImpl.instance, callback, DbInteractor)
+        presenter = CreateListFragmentPresenterImpl(ThreadExecutorImpl, MainThreadImpl, callback, DbInteractor)
 
         val builder = AlertDialog.Builder(activity)
         builder.setView(view)

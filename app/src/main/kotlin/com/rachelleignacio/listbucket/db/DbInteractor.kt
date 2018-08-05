@@ -51,12 +51,4 @@ object DbInteractor {
         list.name = newName
         list.update()
     }
-//
-//    companion object {
-//        private val dbInteractor = DbInteractor()
-//        val instance: DbInteractor
-//            get() {
-//                return dbInteractor
-//            }
-//    }
 }

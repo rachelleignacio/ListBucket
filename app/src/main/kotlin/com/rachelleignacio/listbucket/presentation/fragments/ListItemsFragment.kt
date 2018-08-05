@@ -55,8 +55,7 @@ class ListItemsFragment @SuppressLint("ValidFragment") internal constructor() : 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         readBundleArgs()
-        presenter = ListItemsFragmentPresenterImpl(ThreadExecutorImpl.instance, MainThreadImpl.instance,
-                DbInteractor, this, parentList)
+        presenter = ListItemsFragmentPresenterImpl(ThreadExecutorImpl, MainThreadImpl, DbInteractor, this, parentList)
 
         activity.title = parentList.name
         initListItems()

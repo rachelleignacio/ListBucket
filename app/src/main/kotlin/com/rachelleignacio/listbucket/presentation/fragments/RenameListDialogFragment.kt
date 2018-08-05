@@ -43,8 +43,7 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
         }
 
 
-        presenter = RenameListFragmentPresenterImpl(ThreadExecutorImpl.instance, MainThreadImpl.instance,
-                callback, DbInteractor)
+        presenter = RenameListFragmentPresenterImpl(ThreadExecutorImpl, MainThreadImpl, callback, DbInteractor)
 
         val builder = AlertDialog.Builder(activity)
         builder.setView(view)
@@ -69,14 +68,8 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
 
         return dialog
     }
-
-    override fun onStart() {
-        super.onStart()
-
-    }
-
     companion object {
-        val TAG = "RenameListDialogFragment"
+        const val TAG = "RenameListDialogFragment"
         fun newInstance(callback: RenameListInteractor.Callback, listToRename: List):
                 RenameListDialogFragment {
             val fragment = RenameListDialogFragment()
