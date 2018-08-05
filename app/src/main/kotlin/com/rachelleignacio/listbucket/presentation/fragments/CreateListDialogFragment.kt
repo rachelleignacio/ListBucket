@@ -17,13 +17,16 @@ import com.rachelleignacio.listbucket.presentation.presenters.CreateListFragment
 import com.rachelleignacio.listbucket.presentation.presenters.impl.CreateListFragmentPresenterImpl
 import com.rachelleignacio.listbucket.util.Keyboard
 
+fun newCreateListDialogFragmentInstance(callback: CreateListInteractor.Callback): CreateListDialogFragment =
+    CreateListDialogFragment().apply { this.callback = callback }
+
 /**
  * Created by rachelleignacio on 8/29/17.
  */
 class CreateListDialogFragment @SuppressLint("ValidFragment") internal constructor() : DialogFragment() {
 
     private lateinit var editTextBox: EditText
-    private lateinit var callback: CreateListInteractor.Callback
+    internal lateinit var callback: CreateListInteractor.Callback
     private lateinit var presenter: CreateListFragmentPresenter
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -67,10 +70,5 @@ class CreateListDialogFragment @SuppressLint("ValidFragment") internal construct
 
     companion object {
         const val TAG = "CreateListDialogFragment"
-        fun newInstance(callback: CreateListInteractor.Callback): CreateListDialogFragment {
-            val fragment = CreateListDialogFragment()
-            fragment.callback = callback
-            return fragment
-        }
     }
 }

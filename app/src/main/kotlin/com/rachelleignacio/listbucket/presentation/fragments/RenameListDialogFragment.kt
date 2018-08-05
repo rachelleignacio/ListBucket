@@ -18,17 +18,24 @@ import com.rachelleignacio.listbucket.presentation.presenters.RenameListFragment
 import com.rachelleignacio.listbucket.presentation.presenters.impl.RenameListFragmentPresenterImpl
 import com.rachelleignacio.listbucket.util.Keyboard
 
+private const val LIST_TO_RENAME_ARG = "listToRename"
+fun newRenameListDialogFragmentInstance(callback: RenameListInteractor.Callback, listToRename: List): RenameListDialogFragment =
+        RenameListDialogFragment().apply {
+            this.callback = callback
+            arguments = Bundle(1).apply { putSerializable(LIST_TO_RENAME_ARG, listToRename) }
+        }
+
 /**
  * Created by rachelleignacio on 8/30/17.
  */
 class RenameListDialogFragment @SuppressLint("ValidFragment") internal constructor() : DialogFragment() {
     private lateinit var editTextBox: EditText
-    private lateinit var callback: RenameListInteractor.Callback
+    internal lateinit var callback: RenameListInteractor.Callback
     private lateinit var presenter: RenameListFragmentPresenter
     private lateinit var listToRename: List
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = activity!!.layoutInflater!!.inflate(R.layout.dialog_fragment_rename_list, null)
+        val view = activity.layoutInflater.inflate(R.layout.dialog_fragment_rename_list, null)
 
         editTextBox = view.findViewById(R.id.rename_list_edittext)
         editTextBox.requestFocus()
@@ -42,7 +49,7 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
             handled
         }
 
-
+        listToRename = arguments.getSerializable(LIST_TO_RENAME_ARG) as List
         presenter = RenameListFragmentPresenterImpl(ThreadExecutorImpl, MainThreadImpl, callback, DbInteractor)
 
         val builder = AlertDialog.Builder(activity)
@@ -68,14 +75,8 @@ class RenameListDialogFragment @SuppressLint("ValidFragment") internal construct
 
         return dialog
     }
+
     companion object {
         const val TAG = "RenameListDialogFragment"
-        fun newInstance(callback: RenameListInteractor.Callback, listToRename: List):
-                RenameListDialogFragment {
-            val fragment = RenameListDialogFragment()
-            fragment.callback = callback
-            fragment.listToRename = listToRename
-            return fragment
-        }
     }
 }

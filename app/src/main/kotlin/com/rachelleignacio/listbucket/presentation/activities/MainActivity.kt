@@ -9,8 +9,8 @@ import android.view.WindowManager
 import com.rachelleignacio.listbucket.R
 import com.rachelleignacio.listbucket.constants.SharedPrefs
 import com.rachelleignacio.listbucket.domain.models.List
-import com.rachelleignacio.listbucket.presentation.fragments.MainListBucketFragment
-import com.rachelleignacio.listbucket.presentation.fragments.newItemsInstance
+import com.rachelleignacio.listbucket.presentation.fragments.newListItemsFragmentInstance
+import com.rachelleignacio.listbucket.presentation.fragments.newMainListBucketInstance
 import com.rachelleignacio.listbucket.presentation.presenters.MainActivityPresenter
 import com.rachelleignacio.listbucket.util.Keyboard
 import com.rachelleignacio.listbucket.util.Prefs
@@ -30,15 +30,13 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null) {
-            showListBucket()
-        }
+        if (savedInstanceState == null) showListBucket()
     }
 
     override fun showListBucket() {
         supportFragmentManager
                 .beginTransaction()
-                .replace(CONTENT_FRAME_ID, MainListBucketFragment.newInstance())
+                .replace(CONTENT_FRAME_ID, newMainListBucketInstance())
                 .addToBackStack(BACKSTACK_NAME)
                 .commit()
     }
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     override fun showList(list: List) {
         supportFragmentManager
                 .beginTransaction()
-                .replace(CONTENT_FRAME_ID, newItemsInstance(list))
+                .replace(CONTENT_FRAME_ID, newListItemsFragmentInstance(list))
                 .addToBackStack(BACKSTACK_NAME)
                 .commit()
     }
@@ -73,19 +71,15 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean =
         // Handle action bar item clicks here. The action bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
-        return when (item!!.itemId) {
-            R.id.screen_always_on_toggle -> {
+            if (item?.itemId == R.id.screen_always_on_toggle) {
                 setScreenAlwaysOn(!item.isChecked)
                 Prefs.get(this)[SharedPrefs.SCREEN_AWAKE_KEY] = !item.isChecked
                 item.isChecked = !item.isChecked
                 true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+            } else super.onOptionsItemSelected(item)
 
     fun setScreenAlwaysOn(isEnabled: Boolean) {
         if (isEnabled && supportFragmentManager.backStackEntryCount != 1) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

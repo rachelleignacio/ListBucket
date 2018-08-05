@@ -13,6 +13,8 @@ import com.rachelleignacio.listbucket.domain.interactors.impl.GetListBucketInter
 import com.rachelleignacio.listbucket.domain.models.List
 import com.rachelleignacio.listbucket.presentation.fragments.CreateListDialogFragment
 import com.rachelleignacio.listbucket.presentation.fragments.RenameListDialogFragment
+import com.rachelleignacio.listbucket.presentation.fragments.newCreateListDialogFragmentInstance
+import com.rachelleignacio.listbucket.presentation.fragments.newRenameListDialogFragmentInstance
 import com.rachelleignacio.listbucket.presentation.presenters.AbstractPresenter
 import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter
 
@@ -45,7 +47,7 @@ class ListBucketFragmentPresenterImpl(threadExecutor: ThreadExecutor,
     }
 
     override fun showCreateListDialog(fragmentManager: FragmentManager) {
-        CreateListDialogFragment.newInstance(this)
+        newCreateListDialogFragmentInstance(this)
                 .show(fragmentManager, CreateListDialogFragment.TAG)
     }
 
@@ -67,7 +69,7 @@ class ListBucketFragmentPresenterImpl(threadExecutor: ThreadExecutor,
     }
 
     override fun showRenameListDialog(fragmentManager: FragmentManager, listToRename: List) {
-        RenameListDialogFragment.newInstance(this, listToRename)
+        newRenameListDialogFragmentInstance(this, listToRename)
                 .show(fragmentManager, RenameListDialogFragment.TAG)
     }
 

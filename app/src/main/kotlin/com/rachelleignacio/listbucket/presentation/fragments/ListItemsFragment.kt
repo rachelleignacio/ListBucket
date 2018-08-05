@@ -30,8 +30,8 @@ import com.rachelleignacio.listbucket.util.Prefs
 import com.rachelleignacio.listbucket.util.Prefs.get
 
 private const val CURRENT_LIST_ARG = "currentList"
-fun newItemsInstance(parentList: List): ListItemsFragment =
-        ListItemsFragment().apply { arguments = Bundle().apply { putSerializable(CURRENT_LIST_ARG, parentList) } }
+fun newListItemsFragmentInstance(parentList: List): ListItemsFragment =
+        ListItemsFragment().apply { arguments = Bundle(1).apply { putSerializable(CURRENT_LIST_ARG, parentList) } }
 
 /**
  * Created by rachelleignacio on 8/30/17.

@@ -21,6 +21,8 @@ import com.rachelleignacio.listbucket.presentation.listeners.ListTouchListenerCa
 import com.rachelleignacio.listbucket.presentation.presenters.ListBucketFragmentPresenter
 import com.rachelleignacio.listbucket.presentation.presenters.impl.ListBucketFragmentPresenterImpl
 
+fun newMainListBucketInstance() = MainListBucketFragment()
+
 /**
  * Created by rachelleignacio on 8/30/17.
  */
@@ -86,11 +88,5 @@ class MainListBucketFragment @SuppressLint("ValidFragment") internal constructor
 
     override fun onClickRenameList(listToRename: List) {
         presenter.showRenameListDialog(activity!!.supportFragmentManager, listToRename)
-    }
-
-    companion object {
-        fun newInstance(): MainListBucketFragment {
-            return MainListBucketFragment()
-        }
     }
 }
