@@ -2,7 +2,7 @@
     <string name="app_name">List Bucket</string>
 
     <string name="create_list_edittext_hint">Enter list name</string>
-    <string name="create_list_error_toast_msg">List must have a name</string>
+    <string name="create_rename_list_error_toast_msg">List must have a name</string>
     <string name="create_list_dialog_submit">Create</string>
     <string name="add_list_item_edittext_hint">Add something</string>
     <string name="add_list_item_error_toast_msg">Can\'t add an empty item!</string>
